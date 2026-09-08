@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:it_management_simulator/domain/engine/simulation_engine.dart';
-import 'package:it_management_simulator/domain/models/kpi.dart';
-import 'package:it_management_simulator/domain/models/progress.dart';
-import 'package:it_management_simulator/domain/models/scenario.dart';
+import 'package:techmission/domain/engine/simulation_engine.dart';
+import 'package:techmission/domain/models/kpi.dart';
+import 'package:techmission/domain/models/progress.dart';
+import 'package:techmission/domain/models/scenario.dart';
 
 Scenario _testScenario() {
   return Scenario.fromJson(<String, dynamic>{

@@ -48,7 +48,7 @@ class RuleBasedAssistant implements AssistantService {
     'Que significa CPI y SPI',
   ];
 
-  static const List<_KbEntry> knowledgeBase = <_KbEntry>[
+  static const List<_KbEntry> _knowledgeBase = <_KbEntry>[
     _KbEntry(
       <String>['prioridad', 'priorizar', 'matriz', 'impacto', 'urgencia'],
       'La prioridad de un incidente no se elige por quien grita mas fuerte: sale de cruzar impacto (cuantos usuarios y que servicio critico se ven afectados) con urgencia (que tan rapido se degrada el negocio si no se atiende). Esa matriz es la que define el SLA aplicable.',
@@ -182,7 +182,7 @@ class RuleBasedAssistant implements AssistantService {
 
     _KbEntry? best;
     int bestScore = 0;
-    for (final _KbEntry entry in knowledgeBase) {
+    for (final _KbEntry entry in _knowledgeBase) {
       int score = 0;
       for (final String keyword in entry.keywords) {
         if (normalized.contains(keyword)) score++;

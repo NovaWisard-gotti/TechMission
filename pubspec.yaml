@@ -1,5 +1,5 @@
-name: it_management_simulator
-description: Simulador educativo de gestion de servicios TI (ITIL 4, Scrum y PMBOK) para estudiantes de Ingenieria de Sistemas.
+name: techmission
+description: TechMission, simulador educativo de gestion de servicios TI (ITIL 4, Scrum y PMBOK) para estudiantes de Ingenieria de Sistemas.
 publish_to: 'none'
 version: 1.0.0+1
 

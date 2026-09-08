@@ -24,7 +24,10 @@ jobs:
           cache: true
 
       - name: Generar plataformas nativas
-        run: flutter create --project-name it_management_simulator --org pe.edu.emaf --platforms=android .
+        run: flutter create --project-name techmission --org pe.edu.emaf --platforms=android .
+
+      - name: Nombre de la app en Android
+        run: sed -i 's/android:label="techmission"/android:label="TechMission"/' android/app/src/main/AndroidManifest.xml
 
       - name: Dependencias
         run: flutter pub get
@@ -58,7 +61,10 @@ jobs:
           cache: true
 
       - name: Generar plataformas nativas
-        run: flutter create --project-name it_management_simulator --org pe.edu.emaf --platforms=android .
+        run: flutter create --project-name techmission --org pe.edu.emaf --platforms=android .
+
+      - name: Nombre de la app en Android
+        run: sed -i 's/android:label="techmission"/android:label="TechMission"/' android/app/src/main/AndroidManifest.xml
 
       - name: Dependencias
         run: flutter pub get
@@ -69,6 +75,6 @@ jobs:
       - name: Publicar APK como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: it-management-simulator-apk
+          name: techmission-apk
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30

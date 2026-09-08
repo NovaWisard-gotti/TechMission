@@ -98,7 +98,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           const Divider(height: 28),
           const AboutListTile(
             icon: Icon(Icons.info_outline),
-            applicationName: 'IT Management Simulator',
+            applicationName: 'TechMission',
             applicationVersion: '1.0.0',
             applicationLegalese:
                 'Proyecto Educational Mobile Apps Factory. Contenido educativo con casos ficticios inspirados en practicas reales de gestion de servicios TI.',

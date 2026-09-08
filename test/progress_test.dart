@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:it_management_simulator/domain/models/progress.dart';
+import 'package:techmission/domain/models/progress.dart';
 
 ScenarioResult _result(String scenarioId, double score,
     {Map<String, double>? competencies}) {

@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:it_management_simulator/domain/services/assistant_service.dart';
+import 'package:techmission/domain/services/assistant_service.dart';
 
 void main() {
   const RuleBasedAssistant assistant = RuleBasedAssistant();

@@ -24,7 +24,8 @@ jobs:
           channel: stable
           cache: true
 
-      - run: flutter create --project-name it_management_simulator --org pe.edu.emaf --platforms=android .
+      - run: flutter create --project-name techmission --org pe.edu.emaf --platforms=android .
+      - run: sed -i 's/android:label="techmission"/android:label="TechMission"/' android/app/src/main/AndroidManifest.xml
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --release --split-per-abi

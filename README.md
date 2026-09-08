@@ -1,4 +1,4 @@
-# IT Management Simulator
+# TechMission
 
 Simulador móvil de gestión de servicios TI para estudiantes de Ingeniería de Sistemas. El estudiante administra el área de TI de una empresa ficticia: recibe incidentes, problemas, solicitudes y cambios, toma decisiones y ve el efecto de cada una sobre los indicadores del área.
 

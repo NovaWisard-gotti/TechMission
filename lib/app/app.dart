@@ -6,14 +6,14 @@ import '../presentation/providers/providers.dart';
 import '../presentation/views/shell_screen.dart';
 import 'theme.dart';
 
-class ITManagementSimulatorApp extends ConsumerWidget {
-  const ITManagementSimulatorApp({super.key});
+class TechMissionApp extends ConsumerWidget {
+  const TechMissionApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final AppSettings settings = ref.watch(settingsProvider);
     return MaterialApp(
-      title: 'IT Management Simulator',
+      title: 'TechMission',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),

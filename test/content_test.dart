@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:it_management_simulator/domain/models/competency.dart';
-import 'package:it_management_simulator/domain/models/kpi.dart';
-import 'package:it_management_simulator/domain/models/module.dart';
-import 'package:it_management_simulator/domain/models/scenario.dart';
+import 'package:techmission/domain/models/competency.dart';
+import 'package:techmission/domain/models/kpi.dart';
+import 'package:techmission/domain/models/module.dart';
+import 'package:techmission/domain/models/scenario.dart';
 
 /// Estos tests son el control de calidad del contenido educativo.
 ///
