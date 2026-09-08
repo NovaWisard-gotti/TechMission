@@ -1,0 +1,20 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - "android/**"
+    - "ios/**"
+    - "build/**"
+
+linter:
+  rules:
+    # Se desactivan las sugerencias de `const` porque generan ruido en las
+    # vistas y no aportan al objetivo del proyecto (contenido educativo
+    # correcto y logica de simulacion probada). Las reglas que si importan
+    # -- uso de BuildContext tras await, claves en widgets publicos, prints
+    # olvidados -- quedan activas con flutter_lints.
+    prefer_const_constructors: false
+    prefer_const_literals_to_create_immutables: false
+    prefer_const_constructors_in_immutables: false
+    prefer_const_declarations: false
+    use_key_in_widget_constructors: false

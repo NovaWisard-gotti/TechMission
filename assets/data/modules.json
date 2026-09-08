@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "modules": [
+    {
+      "id": "diagnostico",
+      "title": "Diagnóstico inicial",
+      "area": "Ubicación de nivel",
+      "framework": "ITIL 4 / Scrum / PMBOK",
+      "summary": "Cuatro decisiones rápidas de gestión para ubicar tu nivel y ordenar tu ruta de aprendizaje.",
+      "competencies": ["prio", "inc", "chg", "plan"],
+      "scenarioFile": "diagnostic.json",
+      "order": 0,
+      "isDiagnostic": true
+    },
+    {
+      "id": "itil",
+      "title": "Fundamentos de gestión de servicios",
+      "area": "ITIL 4",
+      "framework": "ITIL 4",
+      "summary": "Clasificar correctamente lo que llega a la mesa de servicio y entender qué promete un SLA antes de comprometerlo.",
+      "competencies": ["prio", "comm", "inc"],
+      "scenarioFile": "itil.json",
+      "order": 1
+    },
+    {
+      "id": "incidentes",
+      "title": "Gestión de incidentes",
+      "area": "Operación del servicio",
+      "framework": "ITIL 4 - práctica de gestión de incidentes",
+      "summary": "Priorizar, escalar, comunicar y restaurar el servicio bajo presión, incluyendo un incidente mayor en vivo.",
+      "competencies": ["inc", "prio", "comm"],
+      "scenarioFile": "incidents.json",
+      "order": 2,
+      "requiresModuleId": "itil"
+    },
+    {
+      "id": "problemas",
+      "title": "Gestión de problemas",
+      "area": "Mejora del servicio",
+      "framework": "ITIL 4 - práctica de gestión de problemas",
+      "summary": "Encontrar la causa raíz de fallas recurrentes y decidir entre solución temporal documentada y solución definitiva.",
+      "competencies": ["prb", "plan", "comm"],
+      "scenarioFile": "problems.json",
+      "order": 3,
+      "requiresModuleId": "incidentes"
+    },
+    {
+      "id": "cambios",
+      "title": "Gestión de cambios",
+      "area": "Control de cambios",
+      "framework": "ITIL 4 - habilitación del cambio",
+      "summary": "Clasificar el cambio, evaluar riesgo, pasar por el CAB y sostener un despliegue con plan de retroceso.",
+      "competencies": ["chg", "plan", "comm"],
+      "scenarioFile": "changes.json",
+      "order": 4,
+      "requiresModuleId": "incidentes"
+    },
+    {
+      "id": "scrum",
+      "title": "Scrum en un equipo de TI",
+      "area": "Desarrollo ágil",
+      "framework": "Scrum",
+      "summary": "Proteger el compromiso del sprint, negociar alcance y sostener la definición de terminado frente a la presión del negocio.",
+      "competencies": ["plan", "prio", "comm"],
+      "scenarioFile": "scrum.json",
+      "order": 5
+    },
+    {
+      "id": "pmbok",
+      "title": "Proyectos TI con PMBOK",
+      "area": "Dirección de proyectos",
+      "framework": "PMBOK / PMI",
+      "summary": "Leer indicadores de valor ganado, responder a riesgos y decidir acciones correctivas en un proyecto de infraestructura.",
+      "competencies": ["plan", "comm", "prio"],
+      "scenarioFile": "pmbok.json",
+      "order": 6
+    },
+    {
+      "id": "producto",
+      "title": "Alcance y MVP de un producto TI",
+      "area": "Gestión de producto",
+      "framework": "Producto digital / MVP",
+      "summary": "Recortar alcance con criterio, elegir qué se construye primero y definir cómo se validará que sirve.",
+      "competencies": ["prio", "plan", "comm"],
+      "scenarioFile": "product.json",
+      "order": 7
+    }
+  ]
+}

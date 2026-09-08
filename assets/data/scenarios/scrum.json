@@ -1,0 +1,167 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_scr_01",
+      "moduleId": "scrum",
+      "title": "Sprint en riesgo en el equipo de desarrollo interno",
+      "company": "Grupo Andina Retail",
+      "role": "Scrum Master del equipo de aplicaciones internas",
+      "difficulty": "intermedio",
+      "estimatedMinutes": 9,
+      "initialKpis": { "sla": 70, "satisfaction": 64, "budget": 74, "morale": 62, "risk": 46 },
+      "briefing": "Tu equipo desarrolla la app de inventario para las tiendas. Van por el día 6 de un sprint de 10 días laborables. El compromiso del sprint son 5 historias; hay 2 terminadas, 2 en progreso y una que ni siquiera empezó porque el desarrollador que la iba a tomar está cubriendo incidentes de producción. La gerencia comercial acaba de pedir una funcionalidad nueva 'para la campaña del sábado'.",
+      "objectives": [
+        "Proteger el compromiso del sprint sin bloquear al negocio",
+        "Manejar la interrupción de trabajo operativo dentro de un equipo de desarrollo",
+        "Sostener la definición de terminado bajo presión de fecha"
+      ],
+      "takeaways": [
+        "Si entra trabajo nuevo a mitad de sprint, algo tiene que salir, y esa decisión es del Product Owner.",
+        "Un equipo que absorbe soporte de producción sin reservar capacidad nunca cumple su compromiso.",
+        "Bajar la definición de terminado para llegar a la fecha traslada el costo a operaciones, multiplicado."
+      ],
+      "steps": [
+        {
+          "id": "s1",
+          "title": "El pedido de la gerencia comercial",
+          "competencyId": "prio",
+          "frameworkRef": "Scrum: el alcance del sprint puede renegociarse entre el Product Owner y el equipo, pero el compromiso no se amplía sin quitar algo.",
+          "hint": "La pregunta no es si el pedido es importante, sino quién decide qué sale del sprint para que entre.",
+          "situation": "El gerente comercial te escribe directamente pidiendo un filtro de productos por promoción para la campaña del sábado. Dice que 'es un cambio chico' y que el Product Owner ya está enterado.",
+          "question": "¿Qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Llevarlo al Product Owner para decidir con él qué historia sale del sprint si esta entra",
+              "quality": "optimal",
+              "consequence": "El Product Owner evalúa y decide postergar una historia de reportes. El filtro entra con alcance acotado y el sprint mantiene su compromiso.",
+              "feedback": "El Scrum Master no acepta ni rechaza alcance: hace que la decisión la tome quien tiene la responsabilidad del producto, con el costo explícito sobre la mesa. Eso convierte una interrupción en una priorización.",
+              "effects": { "satisfaction": 5, "morale": 4, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Aceptarlo: es pequeño y el equipo puede absorberlo sin cambiar el resto del compromiso",
+              "quality": "poor",
+              "consequence": "El filtro toma tres días por integraciones no previstas. El sprint cierra con 3 de 5 historias y la confianza en las estimaciones cae.",
+              "feedback": "Casi ningún cambio pedido a mitad de sprint es realmente pequeño, y aceptarlo sin quitar nada convierte el compromiso en una lista de deseos. La capacidad del equipo no crece porque alguien tenga prisa.",
+              "effects": { "morale": -8, "sla": -6, "satisfaction": 3 }
+            },
+            {
+              "id": "c",
+              "label": "Rechazarlo indicando que el sprint está cerrado y que lo pida para el siguiente",
+              "quality": "acceptable",
+              "consequence": "El gerente comercial escala a la dirección y consigue que se imponga igual, ahora con más ruido y peor relación.",
+              "feedback": "Proteger el sprint es correcto, pero responder con la regla y no con la decisión ignora que el negocio puede tener razón. Scrum permite renegociar el alcance; lo que no permite es agregar sin quitar.",
+              "effects": { "satisfaction": -6, "morale": 3 }
+            }
+          ]
+        },
+        {
+          "id": "s2",
+          "title": "El desarrollador que apaga incendios",
+          "competencyId": "plan",
+          "frameworkRef": "Scrum: la capacidad del sprint debe reflejar el trabajo real, incluida la atención de producción.",
+          "hint": "Si el soporte de producción ocurre todos los sprints, no es un imprevisto: es trabajo que nadie está planificando.",
+          "situation": "Revisas los últimos cuatro sprints: en todos, entre el 20% y el 30% del tiempo del equipo se fue en atender incidentes de producción que nunca se planificaron.",
+          "question": "¿Qué propones en la retrospectiva?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Reservar explícitamente esa capacidad en la planificación y rotar un responsable de soporte por sprint",
+              "quality": "optimal",
+              "consequence": "El siguiente sprint se compromete con 4 historias en vez de 5 y las cumple todas. Las estimaciones vuelven a ser creíbles.",
+              "feedback": "El trabajo que ocurre todos los sprints no es un imprevisto: es demanda estable que hay que planificar. Reservar capacidad y rotar el rol de soporte protege tanto el compromiso como la concentración del resto del equipo.",
+              "effects": { "morale": 8, "sla": 6, "risk": -6 }
+            },
+            {
+              "id": "b",
+              "label": "Pedir al equipo mayor compromiso para cumplir el sprint pese a las interrupciones",
+              "quality": "poor",
+              "consequence": "El equipo hace horas extra dos sprints seguidos, cumple a medias y dos personas empiezan a buscar trabajo.",
+              "feedback": "Cuando la capacidad planificada ignora el trabajo real, pedir más esfuerzo solo traslada la falla de planificación al equipo. Es la vía rápida al desgaste y a la rotación.",
+              "effects": { "morale": -14, "sla": -4, "risk": 8 }
+            },
+            {
+              "id": "c",
+              "label": "Solicitar a la gerencia la contratación de un desarrollador adicional para soporte",
+              "quality": "acceptable",
+              "consequence": "La solicitud entra al presupuesto del próximo año. Mientras tanto, el problema sigue igual durante seis meses.",
+              "feedback": "Más capacidad puede ser parte de la solución, pero es una respuesta lenta y cara a un problema que se puede corregir mañana ajustando la planificación a la realidad.",
+              "effects": { "budget": -8, "morale": 2 }
+            }
+          ]
+        },
+        {
+          "id": "s3",
+          "title": "Terminado a medias",
+          "competencyId": "plan",
+          "frameworkRef": "Scrum: la definición de terminado es un acuerdo del equipo que no se negocia por presión de fecha.",
+          "hint": "Piensa quién paga después el trabajo que se marcó como terminado sin pruebas.",
+          "situation": "Día 9. Una historia está funcionalmente lista pero sin pruebas automatizadas ni documentación, dos elementos de la definición de terminado del equipo. El desarrollador propone marcarla como terminada y completar lo demás el siguiente sprint.",
+          "question": "¿Qué decides?",
+          "options": [
+            {
+              "id": "a",
+              "label": "No se marca como terminada: pasa al siguiente sprint con lo que falta, y se muestra igual en la revisión",
+              "quality": "optimal",
+              "consequence": "La revisión muestra la funcionalidad y se explica qué falta. El siguiente sprint la cierra en un día, con pruebas.",
+              "feedback": "La definición de terminado pierde todo su valor la primera vez que se negocia. Mostrar el avance en la revisión es compatible con no declararlo terminado: transparencia sin autoengaño.",
+              "effects": { "morale": 5, "risk": -8, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Marcarla terminada para cumplir el compromiso y crear una tarea de deuda técnica",
+              "quality": "poor",
+              "consequence": "La tarea de deuda queda al final del backlog. Dos meses después, un cambio en ese módulo genera tres incidentes en producción.",
+              "feedback": "La deuda técnica registrada pero nunca priorizada es simplemente deuda oculta con papeleo. Y la métrica de velocidad del equipo queda inflada, con lo que las próximas estimaciones también fallarán.",
+              "effects": { "risk": 12, "sla": -5, "morale": -4 }
+            },
+            {
+              "id": "c",
+              "label": "Pedir al equipo que se quede hasta terminar las pruebas hoy mismo",
+              "quality": "acceptable",
+              "consequence": "Se completa a las 21:00. Las pruebas están, pero escritas con prisa y el equipo llega desgastado al último día.",
+              "feedback": "Se preserva la definición de terminado, que es lo importante, pero a costa del ritmo sostenible que Scrum plantea explícitamente. Si esto se repite, el equipo empezará a inflar estimaciones para protegerse.",
+              "effects": { "morale": -6, "risk": -4 }
+            }
+          ]
+        },
+        {
+          "id": "s4",
+          "title": "La revisión del sprint",
+          "competencyId": "comm",
+          "frameworkRef": "Scrum: la revisión del sprint es una conversación con los interesados sobre el producto, no un reporte de cumplimiento.",
+          "hint": "Los interesados necesitan poder ajustar el backlog con información real, no quedarse tranquilos.",
+          "situation": "El sprint cerró con 4 de 5 historias terminadas. En la revisión estarán el gerente comercial, el Product Owner y dos jefes de tienda.",
+          "question": "¿Cómo planteas la revisión?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Mostrar lo terminado funcionando, explicar qué no entró y por qué, y recoger retroalimentación para el backlog",
+              "quality": "optimal",
+              "consequence": "Los jefes de tienda detectan que el filtro necesita ordenar por stock. Esa mejora entra al backlog con prioridad alta y evita retrabajo.",
+              "feedback": "La revisión existe para inspeccionar el producto y adaptar el plan con los interesados presentes. Los jefes de tienda son los usuarios reales: su retroalimentación en vivo vale más que tres reuniones de especificación.",
+              "effects": { "satisfaction": 8, "morale": 5, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Presentar un reporte de avance con el porcentaje cumplido y el plan del siguiente sprint",
+              "quality": "poor",
+              "consequence": "La reunión se convierte en una rendición de cuentas de 20 minutos. Nadie ve el producto y el error del filtro se descubre en producción.",
+              "feedback": "Convertir la revisión en un informe de cumplimiento desperdicia la única instancia donde los usuarios reales ven el producto antes de que llegue a producción.",
+              "effects": { "satisfaction": -6, "risk": 8, "morale": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Mostrar solo lo terminado y evitar mencionar la historia que no entró para no generar ruido",
+              "quality": "poor",
+              "consequence": "El gerente comercial asume que la historia faltante está lista y la anuncia a las tiendas. La corrección de expectativas cuesta más que el retraso.",
+              "feedback": "Ocultar lo que no se completó rompe la transparencia, que es el pilar sobre el que se sostiene cualquier inspección y adaptación posterior. Además genera compromisos falsos aguas abajo.",
+              "effects": { "satisfaction": -10, "risk": 6, "morale": -4 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_pmb_01",
+      "moduleId": "pmbok",
+      "title": "Proyecto de red inalámbrica en el campus",
+      "company": "Universidad Continental del Sur",
+      "role": "Jefe de proyecto de infraestructura TI",
+      "difficulty": "avanzado",
+      "estimatedMinutes": 11,
+      "initialKpis": { "sla": 72, "satisfaction": 66, "budget": 62, "morale": 68, "risk": 50 },
+      "briefing": "Diriges el proyecto de renovación de la red inalámbrica del campus: 6 meses, presupuesto de 480.000 soles, 240 puntos de acceso en 9 edificios. Estás en el mes 3. El acta de constitución fija como restricción dura que la red debe estar operativa antes del inicio del ciclo académico. Vas a tomar cinco decisiones de dirección de proyecto sobre datos reales de avance.",
+      "objectives": [
+        "Interpretar indicadores de valor ganado y decidir la acción correctiva",
+        "Responder a un riesgo materializado con el plan previsto",
+        "Gestionar una solicitud de cambio de alcance",
+        "Comunicar el estado real a la dirección"
+      ],
+      "takeaways": [
+        "CPI y SPI dicen cosas distintas: la acción correctiva depende de cuál está afectado.",
+        "Un riesgo con respuesta planificada cuesta la mitad que el mismo riesgo improvisado.",
+        "Aceptar alcance adicional sin ajustar tiempo, costo o calidad no es flexibilidad, es un problema diferido."
+      ],
+      "steps": [
+        {
+          "id": "k1",
+          "title": "Los números del mes 3",
+          "competencyId": "plan",
+          "frameworkRef": "PMBOK: CPI = EV/AC mide eficiencia de costo; SPI = EV/PV mide avance frente al plan.",
+          "hint": "Calcula ambos índices antes de decidir. Uno de los dos está bien y el otro no.",
+          "situation": "Valor planificado (PV): 240.000. Valor ganado (EV): 192.000. Costo real (AC): 190.000. El equipo trabaja bien y sin sobrecostos, pero los edificios 4 y 5 no han empezado por demoras del proveedor de cableado.",
+          "question": "¿Cómo lees estos indicadores y qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "CPI ≈ 1.01 y SPI = 0.80: el problema es de cronograma, no de costo; hay que actuar sobre el proveedor y la secuencia de trabajo",
+              "quality": "optimal",
+              "consequence": "Se replanifica en paralelo los edificios 6 y 7 mientras se presiona al proveedor por contrato. En el mes 4 el SPI sube a 0.91.",
+              "feedback": "Leer ambos índices por separado es lo que permite elegir la acción correcta: aquí el dinero se está gastando bien, pero el avance va retrasado. Recortar costos habría atacado el problema equivocado.",
+              "effects": { "sla": 5, "risk": -8, "morale": 4 }
+            },
+            {
+              "id": "b",
+              "label": "El proyecto va bien: se gastó menos de lo planificado (190.000 frente a 240.000)",
+              "quality": "poor",
+              "consequence": "No se toma ninguna acción. En el mes 5 el retraso es irrecuperable y la red no está lista para el ciclo académico.",
+              "feedback": "Comparar costo real contra valor planificado sin considerar el valor ganado es el error clásico de lectura presupuestal: se gastó menos porque se avanzó menos, no por eficiencia.",
+              "effects": { "risk": 16, "sla": -10, "satisfaction": -8 }
+            },
+            {
+              "id": "c",
+              "label": "Hay desviación general: recortar alcance en los edificios 8 y 9 para ajustar tiempo y costo",
+              "quality": "acceptable",
+              "consequence": "Se recorta cobertura en dos edificios. El proyecto llega a tiempo pero con 40 puntos de acceso menos de los comprometidos.",
+              "feedback": "Recortar alcance es una respuesta válida ante un retraso, pero es la más costosa en valor entregado y aquí se aplicó sin agotar antes la vía contractual con el proveedor, que era la causa real.",
+              "effects": { "sla": 3, "satisfaction": -6, "budget": 5 }
+            }
+          ]
+        },
+        {
+          "id": "k2",
+          "title": "El riesgo que estaba en el registro",
+          "competencyId": "plan",
+          "frameworkRef": "PMBOK: cada riesgo identificado debe tener respuesta planificada, responsable y disparador definido.",
+          "hint": "Revisa si este riesgo estaba previsto y qué respuesta se había acordado para él.",
+          "situation": "El proveedor de cableado informa que no podrá cumplir con los edificios 4 y 5 en el plazo. En el registro de riesgos figura 'incumplimiento del proveedor de cableado' con probabilidad media, impacto alto y respuesta planificada: contratar a un proveedor secundario precalificado.",
+          "question": "¿Qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Activar la respuesta planificada y contratar al proveedor secundario ya precalificado",
+              "quality": "optimal",
+              "consequence": "El secundario entra en cinco días porque la precalificación ya estaba hecha. Se recuperan tres de las cuatro semanas perdidas.",
+              "feedback": "Para esto sirve un registro de riesgos: la respuesta ya estaba diseñada y el proveedor precalificado. Ejecutar el plan previsto es infinitamente más rápido que improvisar una solución en el momento.",
+              "effects": { "risk": -12, "sla": 7, "budget": -6 }
+            },
+            {
+              "id": "b",
+              "label": "Negociar con el proveedor actual una compensación y esperar a que se ponga al día",
+              "quality": "poor",
+              "consequence": "El proveedor promete recuperar y no lo logra. Se pierden tres semanas más y la penalidad contractual no compensa el retraso.",
+              "feedback": "Aceptar la promesa del proveedor que ya incumplió, teniendo una respuesta planificada disponible, es no usar el trabajo de planificación que ya se pagó. La penalidad compensa dinero, no tiempo.",
+              "effects": { "risk": 14, "sla": -10, "satisfaction": -6 }
+            },
+            {
+              "id": "c",
+              "label": "Reasignar al equipo interno para ejecutar el cableado de esos dos edificios",
+              "quality": "acceptable",
+              "consequence": "El equipo interno avanza, pero deja de configurar los edificios ya cableados y aparece un cuello de botella en el mes 5.",
+              "feedback": "Usar capacidad interna es una respuesta razonable, pero mueve el problema de sitio en vez de resolverlo, y desatiende la respuesta planificada que estaba disponible y era más rápida.",
+              "effects": { "morale": -6, "sla": -3, "budget": 4 }
+            }
+          ]
+        },
+        {
+          "id": "k3",
+          "title": "Solicitud de cambio de alcance",
+          "competencyId": "plan",
+          "frameworkRef": "PMBOK: toda solicitud de cambio pasa por control integrado de cambios y evalúa impacto en alcance, tiempo, costo, calidad y riesgo.",
+          "hint": "La pregunta correcta no es si se puede hacer, sino qué impacto tiene en las otras restricciones del proyecto.",
+          "situation": "La facultad de Ingeniería pide agregar cobertura al patio de talleres, que no estaba en el alcance. Argumentan que es solo un edificio más y que 'ya que están cableando'.",
+          "question": "¿Cómo lo procesas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Registrar la solicitud, evaluar impacto en costo, cronograma y riesgo, y llevarla al comité de control de cambios",
+              "quality": "optimal",
+              "consequence": "La evaluación muestra 38.000 soles y tres semanas adicionales. El comité aprueba con financiamiento de la facultad y ampliación de plazo.",
+              "feedback": "El control integrado de cambios convierte un pedido informal en una decisión con datos: quién lo paga, cuánto tiempo agrega y quién autoriza. Aprobar o rechazar sin ese análisis es adivinar.",
+              "effects": { "risk": -8, "satisfaction": 5, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Aceptarlo: es un edificio pequeño y mantener buena relación con la facultad es importante",
+              "quality": "poor",
+              "consequence": "El alcance crece sin presupuesto ni plazo adicional. El proyecto cierra con sobrecosto de 41.000 soles y un mes de retraso.",
+              "feedback": "El crecimiento no controlado del alcance rara vez llega de golpe: llega en pedidos pequeños que nadie evalúa. Cada uno parece razonable, y juntos rompen el proyecto.",
+              "effects": { "budget": -14, "sla": -8, "risk": 10 }
+            },
+            {
+              "id": "c",
+              "label": "Rechazarlo porque no está en el acta de constitución del proyecto",
+              "quality": "acceptable",
+              "consequence": "La facultad lo gestiona por su cuenta con otro proveedor y la red del patio queda incompatible con la del campus.",
+              "feedback": "Proteger la línea base es correcto, pero rechazar sin procesar la solicitud desaprovecha una necesidad legítima y termina generando una solución paralela peor para la institución.",
+              "effects": { "satisfaction": -6, "risk": 6, "budget": 3 }
+            }
+          ]
+        },
+        {
+          "id": "k4",
+          "title": "Informe al comité directivo",
+          "competencyId": "comm",
+          "frameworkRef": "PMBOK: la gestión de comunicaciones entrega a cada interesado la información que necesita para decidir, en su lenguaje.",
+          "hint": "El comité decide sobre presupuesto y fechas, no sobre puntos de acceso configurados.",
+          "situation": "Mes 4. El proyecto recuperó parte del retraso: SPI 0.91, CPI 0.98, y el riesgo del proveedor sigue vigente para los edificios 8 y 9. El comité directivo se reúne mañana.",
+          "question": "¿Qué informas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Estado frente a la línea base, pronóstico de fecha de término, riesgo vigente y la decisión que necesitas del comité",
+              "quality": "optimal",
+              "consequence": "El comité autoriza anticipar la compra de equipos de los edificios 8 y 9 para reducir la exposición al proveedor.",
+              "feedback": "Un informe de proyecto útil siempre termina en una decisión concreta que el comité debe tomar. Presentar solo el estado convierte la reunión en un trámite informativo sin valor.",
+              "effects": { "risk": -10, "satisfaction": 6, "budget": -4 }
+            },
+            {
+              "id": "b",
+              "label": "El detalle técnico del avance: puntos de acceso instalados, configurados y pendientes por edificio",
+              "quality": "poor",
+              "consequence": "El comité no percibe el riesgo vigente y no autoriza nada. Un mes después el problema del proveedor vuelve, ahora sin margen.",
+              "feedback": "El nivel de detalle debe corresponder a la audiencia. Un comité directivo no puede decidir con inventario de equipos: necesita desviación, pronóstico y opciones.",
+              "effects": { "risk": 10, "satisfaction": -4 }
+            },
+            {
+              "id": "c",
+              "label": "Un resumen optimista: el proyecto se recuperó y llegará a tiempo",
+              "quality": "poor",
+              "consequence": "El riesgo se materializa en el mes 5 y el comité se entera cuando ya no hay margen de acción. La credibilidad del jefe de proyecto queda dañada.",
+              "feedback": "Ocultar un riesgo vigente para dar buenas noticias solo cambia el momento en que se sabrá, y lo cambia para peor: cuando ya no se puede hacer nada al respecto.",
+              "effects": { "risk": 14, "satisfaction": -10, "morale": -4 }
+            }
+          ]
+        },
+        {
+          "id": "k5",
+          "title": "Cierre del proyecto",
+          "competencyId": "plan",
+          "frameworkRef": "PMBOK: el cierre incluye aceptación formal de entregables, liberación de recursos y registro de lecciones aprendidas.",
+          "hint": "Piensa qué necesita la organización para que el próximo proyecto no repita lo mismo.",
+          "situation": "La red quedó operativa una semana antes del ciclo académico, con 3% de sobrecosto. El equipo ya está siendo reasignado a otros frentes.",
+          "question": "¿Qué haces antes de cerrar?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Obtener aceptación formal, transferir la operación a soporte con documentación, y registrar lecciones aprendidas",
+              "quality": "optimal",
+              "consequence": "Soporte recibe la red documentada y los tiempos de atención se mantienen. La lección sobre precalificación de proveedores se aplica en el siguiente proyecto.",
+              "feedback": "El cierre es donde el proyecto entrega valor sostenible: sin transferencia documentada, la operación hereda una red que nadie sabe mantener, y sin lecciones aprendidas la organización vuelve a pagar el mismo error.",
+              "effects": { "risk": -12, "sla": 6, "satisfaction": 6, "morale": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Cerrar el proyecto: los entregables están operativos y el equipo hace falta en otros frentes",
+              "quality": "poor",
+              "consequence": "Dos meses después, tres puntos de acceso fallan y nadie en soporte conoce la topología. El diagnóstico toma cuatro días.",
+              "feedback": "Cerrar sin transferencia convierte el éxito del proyecto en un problema de operación. La documentación y el traspaso son parte del entregable, no un extra opcional.",
+              "effects": { "risk": 14, "sla": -8, "morale": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Documentar la solución técnica y cerrar, dejando las lecciones aprendidas para cuando haya tiempo",
+              "quality": "acceptable",
+              "consequence": "La transferencia funciona bien. El siguiente proyecto de infraestructura repite el mismo problema con proveedores.",
+              "feedback": "La transferencia técnica resuelve la operación, pero sin lecciones aprendidas el aprendizaje se queda en las personas que estuvieron y se pierde cuando cambian de puesto.",
+              "effects": { "sla": 4, "risk": 5 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_diag_01",
+      "moduleId": "diagnostico",
+      "title": "Primer turno en la mesa de servicio",
+      "company": "Grupo Andina Retail",
+      "role": "Practicante a cargo del turno de la tarde",
+      "difficulty": "diagnóstico",
+      "estimatedMinutes": 4,
+      "briefing": "Es tu primer turno solo en la mesa de servicio de una cadena de tiendas con 40 sucursales. No hay nadie más para decidir durante las próximas dos horas. Cuatro situaciones distintas van a llegar a tu cola. No se espera que aciertes todas: el objetivo es ubicar qué tan formado está tu criterio de gestión antes de asignarte una ruta.",
+      "objectives": [
+        "Distinguir tipos de trabajo que llegan a TI",
+        "Priorizar cuando hay más demanda que capacidad",
+        "Reconocer cuándo un cambio necesita autorización"
+      ],
+      "takeaways": [
+        "La prioridad sale de cruzar impacto y urgencia, no del cargo de quien reclama.",
+        "Un cambio en producción sin autorización ni plan de retroceso es la causa más común de incidentes graves.",
+        "Comunicar a tiempo reduce el daño de un incidente aunque la solución técnica tarde igual."
+      ],
+      "steps": [
+        {
+          "id": "d1",
+          "title": "Dos tickets al mismo tiempo",
+          "competencyId": "prio",
+          "frameworkRef": "ITIL 4: la prioridad se determina cruzando impacto y urgencia, no por jerarquía del solicitante.",
+          "hint": "Compara cuántos usuarios y qué proceso de negocio se detiene en cada caso, y qué pasa si cada uno espera una hora.",
+          "situation": "A las 15:10 entran dos tickets con un minuto de diferencia. El primero: la caja de la tienda de Miraflores no procesa pagos con tarjeta, la tienda está llena. El segundo: el gerente comercial no puede abrir un archivo de presentación en su laptop y tiene una reunión mañana temprano.",
+          "question": "¿Qué atiendes primero?",
+          "options": [
+            {
+              "id": "a",
+              "label": "La caja de Miraflores, porque detiene ventas de una tienda completa",
+              "quality": "optimal",
+              "consequence": "La caja vuelve a operar en 25 minutos. El gerente espera y su archivo se resuelve al final del turno, a tiempo para su reunión.",
+              "feedback": "Impacto alto (una tienda entera sin cobrar) y urgencia alta (cada minuto son ventas perdidas) frente a impacto individual con urgencia baja. La regla es la matriz impacto-urgencia, no quién reclama con más autoridad.",
+              "effects": { "sla": 5, "satisfaction": 4, "risk": -3 }
+            },
+            {
+              "id": "b",
+              "label": "El ticket del gerente comercial, por su cargo dentro de la empresa",
+              "quality": "poor",
+              "consequence": "La tienda estuvo 50 minutos sin cobrar con tarjeta. El jefe de operaciones escala el caso a la gerencia de TI.",
+              "feedback": "Priorizar por jerarquía es el error más frecuente de una mesa de servicio sin criterio. El cargo del solicitante no es un factor de la matriz de priorización: el impacto en el negocio sí.",
+              "effects": { "sla": -8, "satisfaction": -10, "morale": -3, "risk": 6 }
+            },
+            {
+              "id": "c",
+              "label": "Los dos a la vez, repartiendo tu atención entre ambos",
+              "quality": "poor",
+              "consequence": "Ninguno avanza rápido. La caja tarda 45 minutos y el gerente además percibe demora.",
+              "feedback": "Atender todo en paralelo con un solo recurso alarga los dos casos. Priorizar significa aceptar que algo espera; no decidir también es una decisión, y normalmente la peor.",
+              "effects": { "sla": -5, "satisfaction": -4, "morale": -4 }
+            }
+          ]
+        },
+        {
+          "id": "d2",
+          "title": "¿Incidente o solicitud?",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: un incidente es una interrupción no planificada del servicio; una solicitud es un pedido previsto y de bajo riesgo.",
+          "hint": "Pregúntate si algo dejó de funcionar o si simplemente falta algo que nunca se entregó.",
+          "ticket": {
+            "code": "TKT-2291",
+            "type": "Sin clasificar",
+            "title": "Nuevo asistente contable pide acceso al sistema de facturación",
+            "reportedBy": "Jefa de Contabilidad",
+            "service": "ERP - módulo de facturación",
+            "impact": "1 usuario",
+            "urgency": "Media",
+            "detail": "El colaborador ingresó ayer y necesita acceso de lectura y registro para empezar a trabajar."
+          },
+          "situation": "Contabilidad reporta que su nuevo asistente no puede ingresar al módulo de facturación. Nunca tuvo acceso: recién ingresó a la empresa.",
+          "question": "¿Cómo clasificas este ticket?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Solicitud de servicio, con el flujo de aprobación de accesos",
+              "quality": "optimal",
+              "consequence": "El ticket sigue el flujo estándar de altas y el acceso queda listo el mismo día, con la aprobación registrada.",
+              "feedback": "Nada se rompió: falta algo previsto. Clasificarlo como solicitud mantiene limpias las métricas de incidentes y activa el control de aprobación que exige una auditoría de accesos.",
+              "effects": { "satisfaction": 3, "risk": -2 }
+            },
+            {
+              "id": "b",
+              "label": "Incidente de alta prioridad, porque el usuario no puede trabajar",
+              "quality": "poor",
+              "consequence": "El acceso se otorga rápido pero sin la aprobación de la jefatura. En la auditoría del trimestre aparece un acceso sin sustento.",
+              "feedback": "Que alguien no pueda trabajar no convierte el caso en incidente. Al saltarte el flujo de solicitudes también te saltas el control de autorización, que es justamente lo que revisa una auditoría.",
+              "effects": { "sla": -3, "risk": 8, "satisfaction": 2 }
+            },
+            {
+              "id": "c",
+              "label": "Problema, porque es la tercera vez este mes que pasa con personal nuevo",
+              "quality": "acceptable",
+              "consequence": "Registras un problema y el acceso concreto sigue pendiente unas horas más.",
+              "feedback": "La observación es válida y merece un registro de problema en paralelo: el proceso de incorporación está fallando. Pero eso no resuelve el ticket de hoy, que sigue siendo una solicitud de servicio.",
+              "effects": { "satisfaction": -2, "risk": -3 }
+            }
+          ]
+        },
+        {
+          "id": "d3",
+          "title": "El cambio urgente del proveedor",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: los cambios normales requieren evaluación y autorización; los de emergencia usan una vía rápida documentada, nunca la ausencia de control.",
+          "hint": "La pregunta no es si el proveedor tiene razón técnica, sino quién autoriza tocar producción y cómo vuelves atrás si falla.",
+          "situation": "El proveedor del ERP te escribe por WhatsApp: encontró la causa de la lentitud del sistema y quiere aplicar un parche en el servidor de producción ahora mismo. Dice que toma diez minutos y que si esperan al comité del jueves el problema seguirá toda la semana.",
+          "question": "¿Qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Le das acceso ahora: conoce el sistema mejor que nadie y el problema es real",
+              "quality": "poor",
+              "consequence": "El parche se aplica sin registro. Dos días después falla la facturación electrónica y nadie puede reconstruir qué se cambió.",
+              "feedback": "Un cambio sin registro ni plan de retroceso es la causa más frecuente de incidentes graves. Que el proveedor tenga razón técnica no lo convierte en la autoridad que asume el riesgo del negocio.",
+              "effects": { "risk": 15, "sla": -6, "budget": -4 }
+            },
+            {
+              "id": "b",
+              "label": "Registras un cambio de emergencia, pides plan de retroceso y consigues la autorización por la vía rápida",
+              "quality": "optimal",
+              "consequence": "En 40 minutos tienes RFC registrado, ventana acordada y respaldo verificado. El parche se aplica esa noche con rollback listo.",
+              "feedback": "La vía de emergencia existe justamente para esto: acelera la autorización sin eliminar el control. Registro, plan de retroceso y aprobación de alguien con autoridad son innegociables incluso con prisa.",
+              "effects": { "risk": -8, "sla": 4, "satisfaction": 3 }
+            },
+            {
+              "id": "c",
+              "label": "Lo dejas para el comité del jueves sin más análisis",
+              "quality": "acceptable",
+              "consequence": "El control se respeta, pero el sistema sigue lento tres días más y las quejas de usuarios aumentan.",
+              "feedback": "Respetar el proceso es correcto, pero aplicarlo sin evaluar la urgencia es burocracia. La gestión de cambios contempla la emergencia precisamente para no elegir entre control y velocidad.",
+              "effects": { "satisfaction": -5, "sla": -3, "risk": -2 }
+            }
+          ]
+        },
+        {
+          "id": "d4",
+          "title": "El correo se cae a las 17:00",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: en un incidente mayor, la comunicación con los interesados es parte de la respuesta, no un trámite posterior.",
+          "hint": "Piensa qué necesitan decidir los usuarios mientras tú resuelves, y con qué información pueden hacerlo.",
+          "situation": "El servidor de correo deja de responder para toda la empresa. El equipo de infraestructura ya está trabajando y estima entre 40 minutos y 2 horas. Los usuarios empiezan a llamar a la mesa de servicio.",
+          "question": "¿Cuál es tu primera acción de gestión?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Publicar un aviso a toda la empresa con el estado, la hora estimada y el canal alterno",
+              "quality": "optimal",
+              "consequence": "Las llamadas bajan de golpe. Las áreas usan el canal alterno y el equipo técnico trabaja sin interrupciones.",
+              "feedback": "Comunicar temprano no acelera la solución técnica, pero reduce el impacto real: la gente puede reorganizarse y el equipo deja de atender llamadas en vez de resolver. Un tiempo estimado impreciso comunicado es mejor que el silencio.",
+              "effects": { "satisfaction": 8, "morale": 5, "sla": 2 }
+            },
+            {
+              "id": "b",
+              "label": "Esperar a tener la solución para no dar información equivocada",
+              "quality": "poor",
+              "consequence": "Dos horas de silencio. Cuando el servicio vuelve, la queja formal ya llegó a gerencia general.",
+              "feedback": "El silencio se interpreta como que nadie está atendiendo. En incidentes mayores la percepción del servicio se define tanto por la comunicación como por el tiempo de solución.",
+              "effects": { "satisfaction": -12, "morale": -4, "risk": 4 }
+            },
+            {
+              "id": "c",
+              "label": "Responder uno por uno a quienes llamen, con el detalle de lo que está pasando",
+              "quality": "acceptable",
+              "consequence": "Quienes llaman quedan informados; el resto de la empresa no se entera y la mesa queda saturada toda la tarde.",
+              "feedback": "Informar es correcto, pero hacerlo uno a uno no escala y consume la capacidad que necesitas para coordinar. Un aviso masivo cubre a todos en un minuto.",
+              "effects": { "satisfaction": 2, "morale": -5, "sla": -3 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

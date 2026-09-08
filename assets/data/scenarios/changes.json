@@ -1,0 +1,331 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_chg_01",
+      "moduleId": "cambios",
+      "title": "Migración del servidor de base de datos",
+      "company": "Grupo Andina Retail",
+      "role": "Responsable de habilitación del cambio",
+      "difficulty": "avanzado",
+      "estimatedMinutes": 11,
+      "initialKpis": { "sla": 74, "satisfaction": 68, "budget": 70, "morale": 66, "risk": 48 },
+      "briefing": "El servidor de base de datos del ERP llega al límite de su capacidad y hay que migrarlo a una infraestructura nueva. La migración afecta a 40 tiendas, facturación electrónica y el sistema de inventarios. Tienes cinco decisiones: clasificar el cambio, evaluar su riesgo, llevarlo al comité, ejecutar la ventana y responder cuando algo no salga como estaba previsto.",
+      "objectives": [
+        "Clasificar correctamente el tipo de cambio",
+        "Evaluar riesgo e impacto antes de autorizar",
+        "Preparar plan de retroceso y criterio de éxito",
+        "Decidir bajo presión durante una ventana de mantenimiento"
+      ],
+      "takeaways": [
+        "Un cambio sin plan de retroceso probado no está listo para ejecutarse.",
+        "El criterio de éxito y el punto de no retorno se definen antes de empezar, no durante la madrugada.",
+        "La revisión posterior al cambio es lo que evita repetir el mismo error en la siguiente migración."
+      ],
+      "steps": [
+        {
+          "id": "c1",
+          "title": "Tipo de cambio",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: cambio estándar (preautorizado y repetible), normal (requiere evaluación y autorización) y de emergencia (vía rápida documentada).",
+          "hint": "Pregúntate si este procedimiento ya se ejecutó antes con resultado conocido y riesgo acotado.",
+          "situation": "El administrador de base de datos propone registrarlo como cambio estándar porque 'migrar una base de datos es un procedimiento conocido' y así se evita esperar al comité.",
+          "question": "¿Cómo lo clasificas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Cambio normal de alto riesgo: nunca se hizo esta migración en este entorno y afecta servicios críticos",
+              "quality": "optimal",
+              "consequence": "El cambio entra a evaluación formal. Se detecta que la facturación electrónica requiere reconfiguración que nadie había considerado.",
+              "feedback": "Un cambio estándar debe ser repetible, preautorizado y de riesgo conocido. Una migración inédita sobre servicios críticos no cumple ninguna de las tres condiciones, por más que la técnica sea conocida en general.",
+              "effects": { "risk": -12, "sla": 4, "morale": -2 }
+            },
+            {
+              "id": "b",
+              "label": "Cambio estándar: el procedimiento es conocido y esperar al comité retrasa dos semanas el proyecto",
+              "quality": "poor",
+              "consequence": "Se ejecuta sin evaluación. La facturación electrónica queda inoperativa 14 horas y hay multa tributaria por comprobantes no emitidos.",
+              "feedback": "Clasificar un cambio de alto riesgo como estándar para ahorrar tiempo es la causa más común de incidentes graves post-cambio. La clasificación describe el riesgo, no la prisa.",
+              "effects": { "risk": 20, "sla": -12, "budget": -12, "satisfaction": -10 }
+            },
+            {
+              "id": "c",
+              "label": "Cambio de emergencia, para acelerar la aprobación sin saltarse el registro",
+              "quality": "poor",
+              "consequence": "El comité de emergencia cuestiona la clasificación y el cambio vuelve al flujo normal, con dos días perdidos.",
+              "feedback": "La vía de emergencia es para restaurar un servicio afectado o evitar un daño inminente, no para acelerar trabajo planificado. Usarla como atajo desgasta el mecanismo cuando de verdad haga falta.",
+              "effects": { "risk": 6, "morale": -4, "sla": -3 }
+            }
+          ]
+        },
+        {
+          "id": "c2",
+          "title": "Evaluación de riesgo",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: la evaluación del cambio considera impacto en servicios, riesgo técnico, ventana disponible y capacidad de retroceso.",
+          "hint": "Un plan de retroceso que nunca se probó no es un plan de retroceso.",
+          "situation": "Preparas el expediente para el comité. Tienes: procedimiento técnico detallado, estimación de 6 horas, y un respaldo completo tomado hace tres semanas que nunca se restauró para verificarlo.",
+          "question": "¿Qué haces antes de presentarlo?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Probar la restauración del respaldo en un entorno de prueba y medir cuánto tarda",
+              "quality": "optimal",
+              "consequence": "La prueba revela que la restauración completa toma 5 horas, no 2 como se asumía. La ventana se amplía y se toma un respaldo nuevo.",
+              "feedback": "Un plan de retroceso no probado es una suposición. Descubrir el tiempo real de restauración antes y no durante la madrugada es la diferencia entre un retroceso controlado y una noche perdida.",
+              "effects": { "risk": -14, "budget": -4, "morale": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Presentarlo con el respaldo existente: es un respaldo completo y el procedimiento está documentado",
+              "quality": "poor",
+              "consequence": "Durante la migración hay que retroceder y la restauración falla por un respaldo incompleto. Doce horas sin ERP.",
+              "feedback": "Un respaldo sin restauración verificada es una expectativa, no un control. Verificarlo es barato antes del cambio y carísimo durante.",
+              "effects": { "risk": 18, "sla": -14, "satisfaction": -10 }
+            },
+            {
+              "id": "c",
+              "label": "Tomar un respaldo nuevo el día del cambio y presentar el expediente tal como está",
+              "quality": "acceptable",
+              "consequence": "El respaldo es reciente pero nadie sabe cuánto tarda restaurarlo. Durante la ventana se improvisa el cálculo.",
+              "feedback": "Un respaldo fresco es mejor que uno viejo, pero sigue faltando lo esencial: saber cuánto tarda volver atrás. Ese dato define si el retroceso cabe dentro de la ventana acordada.",
+              "effects": { "risk": 5, "morale": -2 }
+            }
+          ]
+        },
+        {
+          "id": "c3",
+          "title": "Frente al comité de cambios",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: la autoridad de cambio evalúa beneficio, riesgo, impacto, plan de retroceso y comunicación a los interesados.",
+          "hint": "El comité necesita saber a quién afecta, cuándo, qué pasa si falla y quién decide detenerlo.",
+          "situation": "El comité pregunta por la ventana de ejecución. Operaciones dice que la única noche sin movimiento fuerte es el domingo; el proveedor de soporte solo atiende de lunes a sábado.",
+          "question": "¿Qué propones al comité?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Sábado de madrugada, con soporte del proveedor disponible y punto de no retorno definido a las 4:00",
+              "quality": "optimal",
+              "consequence": "El comité aprueba con esas condiciones. Se comunica a tiendas con 72 horas de anticipación y se define quién decide el retroceso.",
+              "feedback": "La ventana correcta equilibra impacto en el negocio con disponibilidad de soporte. Definir el punto de no retorno antes de empezar evita la peor decisión posible: seguir adelante a las 5 de la mañana porque ya se invirtió mucho.",
+              "effects": { "risk": -10, "satisfaction": 5, "sla": 5, "budget": -3 }
+            },
+            {
+              "id": "b",
+              "label": "Domingo de madrugada, que es la noche de menor movimiento, y se llama al proveedor si algo falla",
+              "quality": "poor",
+              "consequence": "Falla la reconfiguración de facturación a las 3:00. El proveedor no responde hasta el lunes y las tiendas abren sin sistema.",
+              "feedback": "Elegir la ventana solo por el impacto operativo, ignorando la disponibilidad del soporte que necesitarías si algo falla, es planificar para el escenario feliz.",
+              "effects": { "risk": 16, "sla": -12, "satisfaction": -12 }
+            },
+            {
+              "id": "c",
+              "label": "Sábado de madrugada sin definir punto de no retorno: si algo falla se evalúa en el momento",
+              "quality": "acceptable",
+              "consequence": "La ventana es correcta, pero a las 5:30 el equipo discute media hora si continuar o retroceder mientras el reloj corre.",
+              "feedback": "La ventana está bien elegida, pero decidir el retroceso en caliente, cansados y con presión, casi siempre lleva a insistir. El punto de no retorno se define en frío, antes de empezar.",
+              "effects": { "risk": 6, "morale": -4 }
+            }
+          ]
+        },
+        {
+          "id": "c4",
+          "title": "3:40 de la madrugada",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: el criterio de retroceso definido previamente se ejecuta sin renegociarlo durante la ventana.",
+          "hint": "Recuerda el punto de no retorno que definiste. ¿Qué sentido tiene tenerlo si se renegocia cuando incomoda?",
+          "situation": "La migración de datos terminó, pero la reconfiguración de facturación electrónica lleva 90 minutos de retraso. Son las 3:40 y el punto de no retorno es a las 4:00. El técnico dice que le falta 'una hora, quizá dos'.",
+          "question": "¿Qué decides?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Ejecutar el retroceso a las 4:00 según lo acordado y reprogramar el cambio",
+              "quality": "optimal",
+              "consequence": "A las 7:30 el ERP opera normalmente sobre el servidor anterior. El cambio se reprograma con la reconfiguración ya resuelta en pruebas.",
+              "feedback": "El punto de no retorno solo sirve si se respeta cuando incomoda. Retroceder no es fracasar: es haber diseñado el cambio para que un imprevisto no se convierta en un incidente mayor.",
+              "effects": { "risk": -10, "sla": 6, "morale": 5, "budget": -5 }
+            },
+            {
+              "id": "b",
+              "label": "Continuar: falta poco y retroceder desperdicia todo el trabajo de la noche",
+              "quality": "poor",
+              "consequence": "La reconfiguración tarda tres horas más. Las tiendas abren a las 9:00 sin facturación electrónica y se pierde la mañana del sábado.",
+              "feedback": "La falacia del costo hundido es la trampa clásica de una ventana de mantenimiento. El trabajo de la noche ya está gastado decidas lo que decidas; lo único que está en juego es el riesgo hacia adelante.",
+              "effects": { "risk": 16, "sla": -14, "satisfaction": -12, "morale": -8 }
+            },
+            {
+              "id": "c",
+              "label": "Extender la ventana una hora y avisar a operaciones que la apertura podría demorarse",
+              "quality": "acceptable",
+              "consequence": "A las 5:00 sigue sin terminar. Se retrocede igual, pero con dos horas menos de margen y un equipo agotado.",
+              "feedback": "Extender con aviso es mejor que continuar en silencio, pero consume el margen que necesitas para el retroceso. Si el plan preveía 5 horas de restauración, la extensión debía haberse descartado sola.",
+              "effects": { "risk": 7, "morale": -5, "satisfaction": -4 }
+            }
+          ]
+        },
+        {
+          "id": "c5",
+          "title": "Después del cambio",
+          "competencyId": "plan",
+          "frameworkRef": "ITIL 4: la revisión posterior al cambio evalúa si se alcanzó el resultado esperado y qué debe corregirse en el proceso.",
+          "hint": "La pregunta útil no es de quién fue la culpa, sino qué falló en el proceso que hizo posible el retraso.",
+          "situation": "El lunes hay que informar al comité. El cambio no se completó, aunque el retroceso funcionó y ningún servicio quedó afectado en horario laboral.",
+          "question": "¿Cómo lo presentas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Revisión posterior: qué funcionó, qué falló en la estimación de la reconfiguración, y qué se corrige antes del nuevo intento",
+              "quality": "optimal",
+              "consequence": "Se identifica que la reconfiguración nunca se probó en un entorno equivalente. El segundo intento se ejecuta en 4 horas sin incidentes.",
+              "feedback": "Una revisión posterior honesta convierte un cambio fallido en un proceso mejorado. Aquí además hay un resultado que defender: el retroceso planificado funcionó y protegió la operación.",
+              "effects": { "risk": -12, "morale": 6, "sla": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Informar que el cambio no se completó por un retraso del técnico responsable",
+              "quality": "poor",
+              "consequence": "El técnico deja de reportar riesgos por miedo. En el siguiente cambio nadie avisa de un problema hasta que es tarde.",
+              "feedback": "Atribuir el resultado a una persona destruye la información que necesitas: si reportar problemas tiene costo personal, la próxima vez no te enterarás a tiempo. La revisión debe apuntar al proceso.",
+              "effects": { "morale": -12, "risk": 10 }
+            },
+            {
+              "id": "c",
+              "label": "Presentar el cambio como exitoso porque el retroceso funcionó y no hubo impacto",
+              "quality": "acceptable",
+              "consequence": "El comité queda tranquilo, pero la causa del retraso no se corrige y el siguiente intento tropieza igual.",
+              "feedback": "El retroceso exitoso es un logro real y hay que decirlo, pero presentar el cambio como exitoso oculta la lección. El objetivo del cambio no se cumplió y esa distinción importa.",
+              "effects": { "risk": 6, "morale": 2 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sc_chg_02",
+      "moduleId": "cambios",
+      "title": "El parche de seguridad del viernes",
+      "company": "Cooperativa Financiera Norte",
+      "role": "Analista de cambios de turno",
+      "difficulty": "intermedio",
+      "estimatedMinutes": 7,
+      "initialKpis": { "sla": 72, "satisfaction": 66, "morale": 70, "risk": 52 },
+      "briefing": "Viernes 16:00. Se publica una vulnerabilidad crítica que afecta al servidor de banca en línea de la cooperativa. Hay un parche disponible del fabricante desde hace tres horas. El comité de cambios se reúne los martes. La banca en línea opera 24/7 y el fin de semana concentra el 30% de las transacciones.",
+      "objectives": [
+        "Decidir entre vía de emergencia y flujo normal ante un riesgo de seguridad",
+        "Evaluar el riesgo de aplicar frente al riesgo de no aplicar",
+        "Definir verificación posterior al despliegue"
+      ],
+      "takeaways": [
+        "No aplicar un cambio también es una decisión con riesgo, y hay que sustentarla igual.",
+        "La vía de emergencia acelera la autorización, nunca elimina el registro ni el plan de retroceso.",
+        "Un cambio no termina cuando se aplica, sino cuando se verifica que el servicio quedó correcto."
+      ],
+      "steps": [
+        {
+          "id": "e1",
+          "title": "Esperar al martes o no",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: el cambio de emergencia se justifica cuando el riesgo de no actuar supera el de actuar con evaluación reducida.",
+          "hint": "Compara dos riesgos: el de aplicar un parche con pruebas limitadas y el de dejar expuesto un servicio financiero todo el fin de semana.",
+          "situation": "La vulnerabilidad permite ejecución remota de código y ya hay exploits públicos. El parche tiene tres horas de publicado y no está probado en el entorno de la cooperativa.",
+          "question": "¿Qué propones?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Cambio de emergencia: probar el parche en preproducción esta tarde y desplegar hoy con autorización del ECAB",
+              "quality": "optimal",
+              "consequence": "La prueba en preproducción toma dos horas, el despliegue se hace a las 22:00 con respaldo previo y el servicio queda protegido el fin de semana.",
+              "feedback": "Exploit público más servicio financiero expuesto es exactamente el escenario de la vía de emergencia. Se acorta la autorización pero se mantienen prueba, respaldo y registro.",
+              "effects": { "risk": -16, "morale": -3, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Esperar al comité del martes: aplicar un parche sin pruebas suficientes es más riesgoso",
+              "quality": "poor",
+              "consequence": "El lunes se detecta un intento de intrusión aprovechando la vulnerabilidad. El incidente escala a la superintendencia.",
+              "feedback": "El razonamiento sobre el riesgo de aplicar es válido, pero incompleto: falta ponderar el riesgo de no aplicar. Con exploits públicos sobre banca en línea, esperar cuatro días es la opción más riesgosa.",
+              "effects": { "risk": 20, "satisfaction": -8, "budget": -8 }
+            },
+            {
+              "id": "c",
+              "label": "Aplicar el parche ahora mismo en producción, sin pruebas: la urgencia lo justifica",
+              "quality": "poor",
+              "consequence": "El parche rompe la integración con el sistema de autenticación y la banca en línea queda inoperativa el viernes por la noche.",
+              "feedback": "Emergencia no significa ausencia de control. La vía rápida comprime la autorización, no las pruebas mínimas ni el respaldo previo.",
+              "effects": { "risk": 12, "sla": -12, "satisfaction": -12 }
+            }
+          ]
+        },
+        {
+          "id": "e2",
+          "title": "Quién autoriza",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: los cambios de emergencia requieren una autoridad designada (ECAB) y quedan registrados con la misma trazabilidad.",
+          "hint": "El registro y la autorización no desaparecen en emergencia: se comprimen.",
+          "situation": "El presidente del comité está de viaje. El jefe de infraestructura te dice que avances y que se documente el lunes.",
+          "question": "¿Cómo procedes?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Convocar al comité de emergencia con el suplente designado y registrar el RFC antes de ejecutar",
+              "quality": "optimal",
+              "consequence": "El suplente autoriza en 25 minutos por videollamada. El RFC queda registrado con la evaluación y el plan de retroceso.",
+              "feedback": "El procedimiento de emergencia contempla suplencias justamente para esto. Registrar antes de ejecutar es lo que permite auditar la decisión después, algo obligatorio en una entidad financiera supervisada.",
+              "effects": { "risk": -10, "sla": 3, "morale": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Ejecutar con la instrucción verbal del jefe de infraestructura y documentar el lunes",
+              "quality": "poor",
+              "consequence": "El parche funciona, pero la auditoría interna observa un cambio en producción sin autorización registrada y abre un hallazgo.",
+              "feedback": "En un entorno regulado, un cambio sin trazabilidad es un hallazgo aunque el resultado técnico haya sido correcto. La documentación posterior no sustituye la autorización previa.",
+              "effects": { "risk": 12, "budget": -5 }
+            },
+            {
+              "id": "c",
+              "label": "Esperar el regreso del presidente del comité el lunes",
+              "quality": "poor",
+              "consequence": "El servicio queda expuesto todo el fin de semana por una formalidad que el procedimiento ya resolvía con suplencias.",
+              "feedback": "Aplicar el procedimiento sin conocerlo termina en el peor de los mundos: se mantiene el riesgo técnico y ni siquiera se gana control, porque la suplencia existía.",
+              "effects": { "risk": 14, "satisfaction": -6 }
+            }
+          ]
+        },
+        {
+          "id": "e3",
+          "title": "Después de aplicar",
+          "competencyId": "chg",
+          "frameworkRef": "ITIL 4: la verificación posterior al despliegue confirma que el servicio opera según los criterios de éxito definidos.",
+          "hint": "Que el servidor responda no significa que el servicio funcione como debe.",
+          "situation": "22:40. El parche se aplicó, el servidor reinició y responde. El equipo quiere cerrar el cambio e irse.",
+          "question": "¿Qué falta?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Verificar transacciones reales de prueba, autenticación y conciliación antes de declarar el cambio exitoso",
+              "quality": "optimal",
+              "consequence": "La prueba detecta que las notificaciones por SMS dejaron de enviarse. Se corrige en 20 minutos, antes del fin de semana.",
+              "feedback": "El criterio de éxito de un cambio es funcional, no técnico. Que el servidor responda es el mínimo; lo que hay que verificar es el flujo completo del servicio para el usuario.",
+              "effects": { "risk": -12, "satisfaction": 7, "sla": 5 }
+            },
+            {
+              "id": "b",
+              "label": "Cerrar el cambio: el servicio responde y el monitoreo no muestra alertas",
+              "quality": "poor",
+              "consequence": "El sábado los clientes no reciben notificaciones de sus operaciones. Se abren 60 reclamos antes de que alguien lo detecte.",
+              "feedback": "El monitoreo de infraestructura no cubre los flujos de negocio. Cerrar sin verificación funcional deja que sea el cliente quien encuentre la falla.",
+              "effects": { "satisfaction": -12, "sla": -8, "risk": 8 }
+            },
+            {
+              "id": "c",
+              "label": "Dejar el cambio en observación hasta el lunes sin pruebas adicionales esta noche",
+              "quality": "acceptable",
+              "consequence": "La falla de notificaciones se detecta el sábado a mediodía, con menos reclamos pero igual impacto en la confianza.",
+              "feedback": "Mantener la observación es mejor que cerrar a ciegas, pero observar sin probar solo adelanta un poco el hallazgo. Diez minutos de prueba funcional habrían evitado el fin de semana con reclamos.",
+              "effects": { "satisfaction": -5, "risk": 3 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

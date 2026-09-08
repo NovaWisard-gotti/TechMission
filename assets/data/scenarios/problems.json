@@ -1,0 +1,168 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_prb_01",
+      "moduleId": "problemas",
+      "title": "La falla que vuelve cada lunes",
+      "company": "Clínica San Rafael",
+      "role": "Analista de gestión de problemas",
+      "difficulty": "intermedio",
+      "estimatedMinutes": 9,
+      "initialKpis": { "sla": 68, "satisfaction": 58, "morale": 64, "risk": 58 },
+      "briefing": "El sistema de historias clínicas presenta errores de guardado los lunes por la mañana desde hace seis semanas. Cada lunes se abre un incidente, se reinicia el servicio de aplicación y todo vuelve a la normalidad hasta el lunes siguiente. La dirección médica ya perdió la paciencia. Te asignan el análisis del problema con acceso a los registros de los seis incidentes.",
+      "objectives": [
+        "Formular una hipótesis de causa raíz basada en evidencia",
+        "Distinguir solución temporal de solución definitiva",
+        "Documentar un error conocido que sirva a la mesa de servicio",
+        "Justificar una inversión correctiva ante la dirección"
+      ],
+      "takeaways": [
+        "La causa raíz se prueba con datos, no se adivina con experiencia.",
+        "Un error conocido bien documentado convierte tres horas de diagnóstico en diez minutos de aplicación.",
+        "Toda solución definitiva compite por presupuesto: hay que sustentarla con el costo de no hacerla."
+      ],
+      "steps": [
+        {
+          "id": "p1",
+          "title": "Por dónde empezar",
+          "competencyId": "prb",
+          "frameworkRef": "ITIL 4: el análisis de problemas parte de datos de incidentes, no de la intuición del técnico más experimentado.",
+          "hint": "Tienes seis incidentes documentados. Antes de tocar nada, ¿qué te dicen juntos que no te dice ninguno por separado?",
+          "situation": "El jefe de infraestructura te dice que seguro es el antivirus, porque 'siempre es el antivirus'. Tienes los registros de los seis incidentes, los horarios exactos y los cambios aplicados en los últimos dos meses.",
+          "question": "¿Cuál es tu primer paso de análisis?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Cruzar los seis incidentes buscando el patrón común: hora exacta, módulo, usuarios y cambios previos",
+              "quality": "optimal",
+              "consequence": "El cruce muestra que los seis empezaron entre 8:02 y 8:11, siempre lunes, y que el patrón inició la semana posterior a un cambio de respaldo.",
+              "feedback": "El análisis de problemas empieza con los datos que ya tienes. El patrón temporal y su coincidencia con un cambio es la pista más valiosa, y solo aparece al mirar los incidentes en conjunto.",
+              "effects": { "risk": -8, "sla": 4, "morale": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Desinstalar el antivirus del servidor y observar el próximo lunes",
+              "quality": "poor",
+              "consequence": "El lunes siguiente falla igual y además queda un servidor clínico sin protección durante una semana.",
+              "feedback": "Actuar sobre una hipótesis no verificada, además desprotegiendo un sistema con datos de salud, es exactamente lo que la gestión de problemas busca evitar. Primero evidencia, después intervención.",
+              "effects": { "risk": 14, "satisfaction": -4, "morale": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Pedir al proveedor del sistema clínico que revise su aplicación",
+              "quality": "acceptable",
+              "consequence": "El proveedor responde en cuatro días que no encuentra nada y devuelve el caso sin más información.",
+              "feedback": "Involucrar al proveedor tiene sentido, pero sin evidencia del patrón el análisis vuelve tal como salió. Con el patrón temporal en la mano, la consulta al proveedor habría sido mucho más productiva.",
+              "effects": { "sla": -3, "risk": 2 }
+            }
+          ]
+        },
+        {
+          "id": "p2",
+          "title": "La hipótesis",
+          "competencyId": "prb",
+          "frameworkRef": "Análisis de causa raíz: la hipótesis debe ser falsable y verificable con evidencia disponible antes de intervenir.",
+          "hint": "Una buena hipótesis se puede confirmar o descartar con un dato concreto, sin tocar producción.",
+          "situation": "Los datos muestran que el respaldo completo semanal se ejecuta domingos a las 23:00 y termina lunes entre 8:00 y 8:15, solapándose con el inicio de la atención ambulatoria.",
+          "question": "¿Cómo procedes?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Verificar en los registros del servidor si el consumo de disco y bloqueos coincide con el horario de error",
+              "quality": "optimal",
+              "consequence": "Los registros confirman saturación de entrada/salida y bloqueos de escritura exactamente en la ventana del error.",
+              "feedback": "Antes de intervenir hay que confirmar la hipótesis con datos existentes. Verificar en registros es gratis, no tiene riesgo y convierte una sospecha razonable en una causa raíz demostrada.",
+              "effects": { "risk": -10, "sla": 5, "morale": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Cambiar de inmediato el horario del respaldo: la coincidencia es suficientemente clara",
+              "quality": "acceptable",
+              "consequence": "El error desaparece, pero nadie documentó la causa y el respaldo ahora choca con un proceso de facturación nocturno.",
+              "feedback": "La intuición era correcta, pero saltarse la verificación deja a la organización sin explicación documentada y sin haber evaluado el impacto de mover el respaldo a otra ventana.",
+              "effects": { "sla": 4, "risk": 5 }
+            },
+            {
+              "id": "c",
+              "label": "Convocar una reunión con todas las áreas para discutir posibles causas",
+              "quality": "poor",
+              "consequence": "Dos horas de reunión, seis hipótesis nuevas sin evidencia y ninguna decisión.",
+              "feedback": "Cuando ya tienes un patrón claro y datos disponibles, abrir una lluvia de ideas retrasa el análisis y diluye la responsabilidad. La reunión sirve para decidir la corrección, no para reemplazar la evidencia.",
+              "effects": { "morale": -5, "sla": -4 }
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "title": "Temporal o definitiva",
+          "competencyId": "prb",
+          "frameworkRef": "ITIL 4: una solución temporal documentada como error conocido es un resultado válido de la gestión de problemas.",
+          "hint": "El próximo lunes llega en tres días. La solución definitiva no estará lista para entonces.",
+          "situation": "La solución definitiva es migrar a un esquema de respaldo incremental, lo que requiere licencias, una ventana de mantenimiento y tres semanas de trabajo. El próximo lunes es en tres días.",
+          "question": "¿Qué propones?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Adelantar el respaldo a las 20:00 como solución temporal, documentar el error conocido y planificar la migración",
+              "quality": "optimal",
+              "consequence": "El lunes siguiente no hay incidentes. La migración se aprueba para el mes siguiente con la evidencia del análisis.",
+              "feedback": "Solución temporal ahora, definitiva planificada, error conocido documentado: las tres cosas juntas. Así se protege al usuario esta semana sin renunciar a la corrección de fondo.",
+              "effects": { "sla": 9, "satisfaction": 8, "risk": -12 }
+            },
+            {
+              "id": "b",
+              "label": "Esperar la migración definitiva: aplicar parches temporales genera deuda técnica",
+              "quality": "poor",
+              "consequence": "Tres lunes más con errores de guardado en historias clínicas antes de que la migración esté lista.",
+              "feedback": "Rechazar la solución temporal por purismo técnico traslada el costo al usuario, aquí en un contexto clínico. La deuda se genera cuando la solución temporal se queda sin plan, no por aplicarla.",
+              "effects": { "satisfaction": -12, "sla": -8, "risk": 6 }
+            },
+            {
+              "id": "c",
+              "label": "Adelantar el respaldo y cerrar el problema: la falla ya no ocurre",
+              "quality": "acceptable",
+              "consequence": "Funciona cuatro meses, hasta que el crecimiento de datos hace que el respaldo dure más y vuelva a solaparse.",
+              "feedback": "La solución temporal funcionó, pero cerrar el problema sin corregir la causa deja una bomba de tiempo atada al crecimiento de datos. La solución temporal compra tiempo, no cierra el caso.",
+              "effects": { "sla": 6, "risk": 8 }
+            }
+          ]
+        },
+        {
+          "id": "p4",
+          "title": "Sustentar la inversión",
+          "competencyId": "plan",
+          "frameworkRef": "PMBOK: la justificación de una inversión correctiva se sustenta comparando su costo con el costo de no hacerla.",
+          "hint": "La dirección médica no entiende de bloqueos de escritura. Entiende de horas perdidas y riesgo asistencial.",
+          "situation": "La dirección médica pregunta por qué debería aprobar una inversión de licencias si 'ya no falla'.",
+          "question": "¿Cómo lo sustentas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Con el costo acumulado de los seis incidentes en horas médicas perdidas y el riesgo clínico de un registro no guardado",
+              "quality": "optimal",
+              "consequence": "La dirección aprueba la migración al ver que seis incidentes costaron más que la licencia anual.",
+              "feedback": "Traducir el problema técnico a lenguaje de negocio y riesgo es lo que separa a un analista de un técnico. El argumento no es que la tecnología esté mal: es que no corregirla ya costó más de lo que cuesta corregirla.",
+              "effects": { "budget": -6, "risk": -12, "satisfaction": 6, "sla": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Explicando el detalle técnico del bloqueo de escritura durante el respaldo completo",
+              "quality": "poor",
+              "consequence": "La dirección no comprende el riesgo, considera que es un asunto interno de TI y posterga la decisión seis meses.",
+              "feedback": "Un sustento técnico dirigido a una audiencia no técnica no persuade. La decisión de inversión se toma con criterios de costo y riesgo, y traducir a ese lenguaje es responsabilidad de quien pide el presupuesto.",
+              "effects": { "risk": 10, "budget": 3, "satisfaction": -4 }
+            },
+            {
+              "id": "c",
+              "label": "Indicando que la solución temporal es suficiente por ahora y se revisará el próximo año",
+              "quality": "acceptable",
+              "consequence": "Se ahorra la inversión este año. En ocho meses el problema regresa con mayor volumen de datos.",
+              "feedback": "Postergar es una decisión legítima si es consciente e informada. Presentarla sin advertir la fecha probable de reaparición convierte una decisión de riesgo en una omisión.",
+              "effects": { "budget": 6, "risk": 8 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

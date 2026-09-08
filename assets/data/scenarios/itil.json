@@ -1,0 +1,202 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_itil_01",
+      "moduleId": "itil",
+      "title": "Poner orden en la mesa de servicio",
+      "company": "Universidad Continental del Sur",
+      "role": "Coordinador de la mesa de servicio",
+      "difficulty": "básico",
+      "estimatedMinutes": 9,
+      "initialKpis": { "sla": 58, "satisfaction": 52, "morale": 60, "risk": 55 },
+      "briefing": "Heredas una mesa de servicio donde todo entra por WhatsApp y se atiende por orden de llegada. El 40% de los tickets se registra como incidente aunque no lo sea, nadie sabe qué se prometió a cada área y el rector pregunta por qué TI 'nunca cumple'. Tienes cinco decisiones para ordenar la operación antes de que empiece el ciclo académico.",
+      "objectives": [
+        "Distinguir incidente, solicitud, problema y cambio",
+        "Definir prioridad con la matriz impacto-urgencia",
+        "Entender la diferencia entre SLA y OLA antes de comprometer tiempos"
+      ],
+      "takeaways": [
+        "Clasificar mal el trabajo distorsiona todas las métricas posteriores y esconde los problemas reales.",
+        "Un SLA solo es sostenible si existe un OLA interno que lo respalde.",
+        "El catálogo de servicios no es burocracia: es lo que permite decir qué se atiende y qué no."
+      ],
+      "steps": [
+        {
+          "id": "i1",
+          "title": "Un canal de entrada",
+          "competencyId": "prio",
+          "frameworkRef": "ITIL 4: la práctica de mesa de servicio necesita un punto único de contacto para registrar y priorizar la demanda.",
+          "hint": "Sin registro no hay métrica, y sin métrica no puedes demostrar nada de lo que hace tu equipo.",
+          "situation": "Los pedidos llegan por WhatsApp, correo, llamadas al anexo y personas que aparecen en la oficina. El equipo atiende lo que recuerda. No hay forma de saber cuántos casos entraron ayer.",
+          "question": "¿Cuál es tu primera medida estructural?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Establecer un punto único de contacto con registro obligatorio de todo ticket",
+              "quality": "optimal",
+              "consequence": "La primera semana hay resistencia, pero al cierre del mes ya tienes datos de volumen, tipo y tiempos reales por área.",
+              "feedback": "Sin registro no existe la operación: no puedes priorizar, medir ni pedir presupuesto. Un punto único de contacto es la base sobre la que se sostienen todas las demás prácticas.",
+              "effects": { "sla": 6, "morale": -3, "risk": -8, "satisfaction": -2 }
+            },
+            {
+              "id": "b",
+              "label": "Mantener los canales actuales y pedir al equipo que anote los casos importantes",
+              "quality": "poor",
+              "consequence": "Cada técnico anota lo que considera importante. Al mes tienes tres criterios distintos y ningún dato comparable.",
+              "feedback": "Un registro opcional y con criterio individual no produce información utilizable. El problema no es la falta de voluntad del equipo sino la ausencia de un proceso definido.",
+              "effects": { "sla": -4, "risk": 6, "morale": 2 }
+            },
+            {
+              "id": "c",
+              "label": "Contratar una herramienta de gestión de tickets antes de definir el proceso",
+              "quality": "acceptable",
+              "consequence": "La herramienta llega en tres semanas y se configura reproduciendo el desorden actual.",
+              "feedback": "La herramienta ayuda, pero automatizar un proceso indefinido solo acelera el desorden. ITIL 4 lo dice como principio: optimizar antes de automatizar.",
+              "effects": { "budget": -10, "sla": 2, "risk": -2 }
+            }
+          ]
+        },
+        {
+          "id": "i2",
+          "title": "Cuatro tickets, cuatro categorías",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: incidente (interrupción), solicitud (pedido previsto), problema (causa de incidentes), cambio (modificación de un servicio).",
+          "hint": "Fíjate si algo se rompió, si falta algo previsto, si hay un patrón repetido, o si alguien quiere modificar el servicio.",
+          "situation": "Llegan cuatro casos: (1) el laboratorio 3 no tiene internet, (2) un docente pide instalar software de estadística, (3) el aula virtual se cae todos los lunes a las 8, (4) la biblioteca pide ampliar la sesión del sistema de préstamos de 15 a 30 minutos.",
+          "question": "¿Cómo los clasificas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "1 incidente, 2 solicitud, 3 problema, 4 cambio",
+              "quality": "optimal",
+              "consequence": "Cada caso entra al flujo correcto. El caso 3 pasa a análisis de causa raíz en vez de reabrirse cada lunes.",
+              "feedback": "Esa es la clasificación correcta. El caso 3 es clave: llevaba semanas tratándose como incidente nuevo cada lunes, lo que ocultaba que había una causa estructural sin investigar.",
+              "effects": { "sla": 7, "risk": -6, "satisfaction": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Los cuatro como incidentes, para que ninguno se pierda en la cola",
+              "quality": "poor",
+              "consequence": "Las métricas muestran 4 incidentes. El de los lunes se cierra y reabre cinco veces sin que nadie investigue.",
+              "feedback": "Registrar todo como incidente infla la estadística y, sobre todo, impide que la gestión de problemas detecte lo recurrente. Las categorías no son burocracia: cada una activa un flujo de trabajo distinto.",
+              "effects": { "sla": -5, "risk": 9, "satisfaction": -3 }
+            },
+            {
+              "id": "c",
+              "label": "1 incidente, 2 solicitud, 3 incidente recurrente, 4 solicitud",
+              "quality": "acceptable",
+              "consequence": "Tres de cuatro entran bien. El pedido de la biblioteca se resuelve sin evaluar el riesgo de sesiones más largas.",
+              "feedback": "Vas bien en los dos primeros, pero un incidente que se repite con patrón es un problema, y modificar el comportamiento de un sistema es un cambio que requiere evaluación de riesgo, no una solicitud rutinaria.",
+              "effects": { "sla": 2, "risk": 4 }
+            }
+          ]
+        },
+        {
+          "id": "i3",
+          "title": "El SLA que promete el director",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: el SLA se acuerda con el cliente; los OLA internos y los contratos con proveedores deben poder sostenerlo.",
+          "hint": "Revisa de qué depende cada tiempo que vas a prometer, y si todo eso está bajo tu control.",
+          "situation": "El director administrativo quiere anunciar que TI resolverá cualquier ticket en menos de 4 horas. Tu equipo son 3 técnicos, el proveedor del aula virtual responde en 24 horas y el 30% de los casos depende de ese proveedor.",
+          "question": "¿Qué respondes?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Aceptar el compromiso: es una buena señal para los usuarios y el equipo se esforzará",
+              "quality": "poor",
+              "consequence": "En el primer mes se incumple el 34% de los tickets. La percepción empeora respecto a cuando no había ningún compromiso.",
+              "feedback": "Un SLA que no se puede sostener destruye más confianza que la ausencia de SLA. Comprometer tiempos que dependen de un tercero sin haber negociado ese contrato es un error clásico de gestión de niveles de servicio.",
+              "effects": { "satisfaction": -12, "sla": -14, "morale": -8 }
+            },
+            {
+              "id": "b",
+              "label": "Proponer un SLA diferenciado por prioridad y renegociar antes el contrato con el proveedor",
+              "quality": "optimal",
+              "consequence": "Se acuerdan 4 horas para prioridad alta, 8 y 24 para el resto, y se agrega una cláusula de 4 horas al contrato del proveedor para casos críticos.",
+              "feedback": "Un SLA se construye de atrás hacia adelante: primero verificas qué pueden sostener tus OLA internos y los contratos con proveedores, después prometes. Diferenciar por prioridad además concentra el esfuerzo donde hay impacto real.",
+              "effects": { "sla": 10, "satisfaction": 6, "budget": -5, "risk": -6 }
+            },
+            {
+              "id": "c",
+              "label": "Rechazar cualquier SLA porque el equipo es demasiado pequeño",
+              "quality": "poor",
+              "consequence": "Sin compromisos publicados, cada área sigue inventando su propia expectativa y las quejas continúan.",
+              "feedback": "Sin acuerdo explícito, el usuario asume su propia expectativa, que siempre será más exigente que la que tú habrías negociado. El tamaño del equipo es un argumento para ajustar el SLA, no para no tenerlo.",
+              "effects": { "satisfaction": -6, "morale": 2 }
+            }
+          ]
+        },
+        {
+          "id": "i4",
+          "title": "Lo que no está en el catálogo",
+          "competencyId": "prio",
+          "frameworkRef": "ITIL 4: el catálogo de servicios define qué se ofrece, a quién, con qué nivel de servicio y a qué costo.",
+          "hint": "La pregunta no es si puedes hacerlo, sino con qué recursos y a costa de qué otro servicio.",
+          "situation": "La facultad de Comunicaciones pide que TI edite los videos de sus clases grabadas. Nunca fue un servicio de TI, pero un técnico lo hizo un par de veces como favor y ahora lo piden formalmente cada semana.",
+          "question": "¿Cómo lo manejas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Aceptarlo: el técnico ya sabe hacerlo y negarse deteriora la relación con la facultad",
+              "quality": "poor",
+              "consequence": "En dos meses la edición de video consume 12 horas semanales del equipo y los tiempos de los servicios formales se degradan.",
+              "feedback": "Cada servicio que se acepta sin evaluar capacidad se paga con el nivel de los servicios existentes. La demanda informal es la principal fuente de sobrecarga en áreas de TI pequeñas.",
+              "effects": { "morale": -10, "sla": -8, "satisfaction": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Evaluarlo como servicio nuevo: definir alcance, capacidad y costo antes de incorporarlo al catálogo",
+              "quality": "optimal",
+              "consequence": "Se acuerda un servicio limitado de 4 videos por semana con plazo de 48 horas, y la facultad asume el costo de una licencia de edición.",
+              "feedback": "Un pedido recurrente no se resuelve diciendo sí o no, sino evaluándolo como servicio: alcance, demanda esperada, capacidad y costo. Así la conversación deja de ser sobre favores y pasa a ser sobre servicios.",
+              "effects": { "satisfaction": 6, "morale": 4, "risk": -4, "budget": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Negarlo indicando que no está en el catálogo de servicios",
+              "quality": "acceptable",
+              "consequence": "La facultad contrata a un estudiante por su cuenta y la relación con TI se enfría.",
+              "feedback": "Proteger la capacidad del equipo es legítimo, pero responder solo con el catálogo desaprovecha una necesidad real del negocio. La gestión de servicios existe para evaluar demanda nueva, no para blindarse de ella.",
+              "effects": { "morale": 3, "satisfaction": -5 }
+            }
+          ]
+        },
+        {
+          "id": "i5",
+          "title": "La métrica que eligió el rector",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: las métricas deben leerse en conjunto y estar ligadas al valor para el cliente, no solo a la eficiencia interna.",
+          "hint": "Piensa qué comportamiento provoca en el equipo la métrica que se va a medir y premiar.",
+          "situation": "El rectorado quiere evaluar a TI con un solo indicador: cantidad de tickets cerrados por semana. Tu equipo ya empezó a comentar que conviene cerrar rápido los casos fáciles.",
+          "question": "¿Qué propones?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Aceptar el indicador: es simple y muestra el volumen de trabajo del área",
+              "quality": "poor",
+              "consequence": "En seis semanas los cierres suben 40% y la satisfacción cae 15 puntos: se cierran tickets sin resolver el problema del usuario.",
+              "feedback": "Una métrica única de volumen premia el cierre, no la solución. Es el ejemplo clásico de indicador que se ve bien mientras el servicio empeora.",
+              "effects": { "satisfaction": -12, "sla": 4, "morale": -6, "risk": 5 }
+            },
+            {
+              "id": "b",
+              "label": "Proponer un tablero de tres indicadores: cumplimiento de SLA, satisfacción y reapertura de tickets",
+              "quality": "optimal",
+              "consequence": "El rectorado acepta. La tasa de reapertura destapa que el 18% de los cierres no resolvía el caso, y eso se corrige.",
+              "feedback": "Los indicadores se leen en conjunto y deben cubrirse entre sí: la reapertura detecta exactamente el atajo que la métrica de volumen incentiva. Ese equilibrio es la esencia de una buena definición de métricas de servicio.",
+              "effects": { "satisfaction": 8, "sla": 5, "morale": 5, "risk": -5 }
+            },
+            {
+              "id": "c",
+              "label": "Pedir que no se mida al área hasta ordenar la operación",
+              "quality": "poor",
+              "consequence": "La dirección interpreta que TI evita rendir cuentas y el presupuesto del próximo periodo se recorta.",
+              "feedback": "Postergar la medición deja a TI sin evidencia para defender su trabajo y su presupuesto. La respuesta correcta a una mala métrica es proponer una mejor, no eliminar la medición.",
+              "effects": { "budget": -10, "satisfaction": -4, "risk": 4 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

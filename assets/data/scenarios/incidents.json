@@ -1,0 +1,386 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_inc_01",
+      "moduleId": "incidentes",
+      "title": "Caída del campus virtual en semana de exámenes",
+      "company": "Universidad Continental del Sur",
+      "role": "Jefe de la mesa de servicio, turno de incidente mayor",
+      "difficulty": "intermedio",
+      "estimatedMinutes": 11,
+      "initialKpis": { "sla": 70, "satisfaction": 62, "morale": 68, "risk": 45 },
+      "briefing": "Son las 8:05 del lunes de exámenes finales. El campus virtual empieza a responder con error para una parte de los estudiantes: 2.400 tienen evaluaciones programadas en las próximas cuatro horas. Tu equipo son 3 técnicos y un administrador de base de datos. El proveedor de la plataforma atiende desde otro país. Vas a tomar cinco decisiones bajo presión y todas dejan huella en el tablero.",
+      "objectives": [
+        "Declarar y clasificar un incidente mayor",
+        "Escalar funcional y jerárquicamente en el momento correcto",
+        "Sostener la comunicación con usuarios durante la interrupción",
+        "Decidir entre solución temporal y solución definitiva bajo presión"
+      ],
+      "takeaways": [
+        "En un incidente mayor el objetivo es restaurar el servicio, no encontrar la causa raíz.",
+        "Escalar no es rendirse: es reconocer que la decisión requiere otro nivel técnico o de autoridad.",
+        "Una solución temporal documentada es una decisión profesional válida si se registra el problema pendiente."
+      ],
+      "steps": [
+        {
+          "id": "n1",
+          "title": "Los primeros diez minutos",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: la declaración de incidente mayor activa un procedimiento distinto, con coordinación y comunicación dedicadas.",
+          "hint": "Un incidente mayor no se declara por lo grave que se ve, sino por impacto y urgencia combinados con el momento del negocio.",
+          "ticket": {
+            "code": "INC-4410",
+            "type": "Incidente",
+            "title": "Campus virtual devuelve error 500 de forma intermitente",
+            "reportedBy": "Múltiples estudiantes y 6 docentes",
+            "service": "Campus virtual - evaluaciones en línea",
+            "impact": "Alto: ~2.400 estudiantes con examen hoy",
+            "urgency": "Alta: exámenes en curso",
+            "detail": "El error aparece de forma intermitente al enviar respuestas. Algunos estudiantes pierden el intento."
+          },
+          "situation": "Entran 34 tickets en ocho minutos con el mismo síntoma. Todavía no sabes la causa. El coordinador académico te llama para preguntar si suspenden los exámenes.",
+          "question": "¿Cuál es tu primera decisión de gestión?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Declarar incidente mayor, asignar un coordinador y abrir el canal de comunicación",
+              "quality": "optimal",
+              "consequence": "En 12 minutos hay un responsable único, un canal con el equipo y un primer aviso publicado. Los tickets duplicados se agrupan bajo el incidente principal.",
+              "feedback": "Impacto alto más urgencia alta en un momento crítico del negocio es exactamente el criterio para declarar incidente mayor. Lo que cambia no es el esfuerzo técnico sino la coordinación: un responsable, un canal, una versión de la información.",
+              "effects": { "sla": 6, "satisfaction": 5, "morale": 4, "risk": -6 }
+            },
+            {
+              "id": "b",
+              "label": "Atender los 34 tickets uno por uno para entender mejor el patrón",
+              "quality": "poor",
+              "consequence": "El equipo se dispersa respondiendo tickets individuales. A los 40 minutos hay 120 tickets y nadie coordina la respuesta técnica.",
+              "feedback": "Cuando varios tickets comparten síntoma y servicio, se agrupan bajo un incidente único. Atenderlos por separado consume la capacidad del equipo justo cuando más falta hace concentrarla.",
+              "effects": { "sla": -10, "satisfaction": -8, "morale": -8 }
+            },
+            {
+              "id": "c",
+              "label": "Pedir al proveedor que revise mientras esperas su diagnóstico para decidir",
+              "quality": "acceptable",
+              "consequence": "El proveedor responde en 50 minutos. Durante ese tiempo nadie coordinó internamente ni informó a los usuarios.",
+              "feedback": "Escalar al proveedor es parte de la respuesta, pero no la reemplaza. La gestión del incidente sigue siendo tuya: coordinación interna y comunicación no se delegan a un tercero.",
+              "effects": { "sla": -4, "satisfaction": -6, "risk": 4 }
+            }
+          ]
+        },
+        {
+          "id": "n2",
+          "title": "El coordinador académico exige una respuesta",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: la comunicación en incidentes mayores debe entregar estado, impacto conocido, próxima actualización y acción esperada del usuario.",
+          "hint": "El coordinador necesita decidir si suspende exámenes. ¿Qué información le permite decidir eso, aunque no tengas la solución?",
+          "situation": "No sabes aún la causa ni cuánto tardarás. El coordinador académico necesita decidir en los próximos minutos si suspende las evaluaciones de la mañana.",
+          "question": "¿Qué le comunicas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Que todavía no tienes información y le avisarás cuando sepas algo",
+              "quality": "poor",
+              "consequence": "Sin datos, decide continuar. Cuarenta minutos después hay 300 intentos de examen perdidos y una crisis académica.",
+              "feedback": "Aunque no tengas la solución, sí tienes información: alcance observado, servicios afectados y hora de la próxima actualización. Negar información obliga al negocio a decidir a ciegas.",
+              "effects": { "satisfaction": -12, "risk": 8, "sla": -4 }
+            },
+            {
+              "id": "b",
+              "label": "Estado actual, alcance conocido, riesgo de perder intentos y compromiso de actualizar en 20 minutos",
+              "quality": "optimal",
+              "consequence": "Con esa información decide reprogramar las evaluaciones de las 10:00 y mantener las de la tarde. El daño académico se limita.",
+              "feedback": "Comunicar durante un incidente no es prometer una solución: es dar al negocio lo que necesita para tomar su propia decisión. Un ciclo fijo de actualizaciones además evita que te llamen cada cinco minutos.",
+              "effects": { "satisfaction": 9, "morale": 3, "risk": -6 }
+            },
+            {
+              "id": "c",
+              "label": "Asegurarle que estará resuelto en menos de una hora para que no suspenda nada",
+              "quality": "poor",
+              "consequence": "No se resuelve en una hora. La confianza en TI queda dañada más allá de este incidente.",
+              "feedback": "Prometer un tiempo que no puedes sostener transforma un problema técnico en un problema de credibilidad. Es preferible dar un rango amplio y honesto que un compromiso improvisado.",
+              "effects": { "satisfaction": -10, "morale": -4, "risk": 6 }
+            }
+          ]
+        },
+        {
+          "id": "n3",
+          "title": "Escalar o seguir intentando",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: el escalamiento funcional busca más capacidad técnica; el jerárquico busca autoridad para decidir.",
+          "hint": "Distingue si lo que te falta es conocimiento técnico o permiso para tomar una decisión de negocio.",
+          "situation": "A los 35 minutos, tu administrador de base de datos sospecha de un bloqueo por saturación de conexiones, pero nunca trabajó con esta plataforma. El contrato con el proveedor incluye soporte crítico en 4 horas, que se puede reducir a 1 hora pagando una tarifa de emergencia que excede tu nivel de autorización.",
+          "question": "¿Qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Escalamiento funcional al proveedor y jerárquico al director de TI para autorizar la tarifa de emergencia",
+              "quality": "optimal",
+              "consequence": "El director autoriza en 10 minutos. El proveedor entra a la hora y confirma la saturación de conexiones.",
+              "feedback": "Los dos escalamientos son distintos y aquí hacen falta ambos: capacidad técnica que tu equipo no tiene, y autoridad para comprometer un gasto que no te corresponde. Escalar temprano en un incidente mayor no es debilidad, es procedimiento.",
+              "effects": { "sla": 7, "budget": -8, "risk": -8, "morale": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Seguir investigando internamente para no gastar el presupuesto de soporte crítico",
+              "quality": "poor",
+              "consequence": "Dos horas más de indisponibilidad. El costo académico y reputacional supera con creces la tarifa que querías ahorrar.",
+              "feedback": "Cuidar el presupuesto es parte del trabajo, pero el cálculo debe incluir el costo del servicio caído. En un incidente mayor con examen en curso, cada hora cuesta mucho más que la tarifa de emergencia.",
+              "effects": { "sla": -12, "satisfaction": -10, "morale": -6, "risk": 8 }
+            },
+            {
+              "id": "c",
+              "label": "Escalar solo al proveedor por el canal normal y esperar las 4 horas del contrato",
+              "quality": "acceptable",
+              "consequence": "El proveedor responde a las 3 horas y media. El servicio se restablece pasado el mediodía.",
+              "feedback": "Escalar al proveedor es correcto, pero aceptar el SLA estándar en un incidente mayor desperdicia la vía de emergencia que el propio contrato contempla. Faltó el escalamiento jerárquico para habilitarla.",
+              "effects": { "sla": -6, "satisfaction": -5, "budget": 3 }
+            }
+          ]
+        },
+        {
+          "id": "n4",
+          "title": "Solución temporal disponible",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: en gestión de incidentes el objetivo es restaurar el servicio; la causa raíz corresponde a la gestión de problemas.",
+          "hint": "El objetivo de la gestión de incidentes no es entender por qué falló, sino que el servicio vuelva.",
+          "situation": "El proveedor propone reiniciar el pool de conexiones y limitar temporalmente las sesiones concurrentes a 800. Eso restablecería el servicio en 15 minutos, pero dejaría a estudiantes en cola en los picos y no explica por qué se saturó.",
+          "question": "¿Aplicas la solución temporal?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Sí, y registras en paralelo un problema para investigar la causa raíz",
+              "quality": "optimal",
+              "consequence": "El servicio vuelve a las 9:20 con cola en los picos. Queda abierto el problema PRB-118 para la investigación de la semana.",
+              "feedback": "Esta es la decisión de manual: restaurar primero, investigar después, y dejar registrado el problema para que la solución temporal no se vuelva permanente por olvido.",
+              "effects": { "sla": 10, "satisfaction": 8, "risk": -4, "morale": 4 }
+            },
+            {
+              "id": "b",
+              "label": "No, esperar la causa raíz para aplicar una solución definitiva y evitar parches",
+              "quality": "poor",
+              "consequence": "El análisis toma tres horas más. Los exámenes de la mañana se pierden por completo.",
+              "feedback": "Confundir gestión de incidentes con gestión de problemas es el error conceptual más caro de esta práctica. Mientras el servicio está caído, la prioridad es restaurarlo, aunque la solución sea temporal.",
+              "effects": { "sla": -14, "satisfaction": -12, "morale": -6 }
+            },
+            {
+              "id": "c",
+              "label": "Sí, y cierras el incidente como resuelto una vez que el servicio responde",
+              "quality": "acceptable",
+              "consequence": "El servicio vuelve, pero nadie investiga la saturación. Tres semanas después se repite en la matrícula.",
+              "feedback": "Restaurar fue correcto; cerrar sin registrar el problema no. Una solución temporal sin problema abierto garantiza que el mismo incidente regrese, normalmente en el peor momento.",
+              "effects": { "sla": 8, "satisfaction": 6, "risk": 10 }
+            }
+          ]
+        },
+        {
+          "id": "n5",
+          "title": "Cierre del incidente",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: el cierre incluye confirmación con el usuario, documentación y revisión posterior en incidentes mayores.",
+          "hint": "Piensa qué necesita quedar escrito para que el próximo turno no empiece de cero.",
+          "situation": "12:40. El servicio está estable desde hace tres horas con el límite de sesiones aplicado. El equipo está agotado y quiere cerrar el caso e irse a almorzar.",
+          "question": "¿Cómo cierras?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Cierre con confirmación académica, línea de tiempo documentada, problema abierto y revisión post-incidente agendada",
+              "quality": "optimal",
+              "consequence": "La revisión del jueves identifica que el límite de conexiones nunca se ajustó al crecimiento de matrícula. Se corrige de forma definitiva.",
+              "feedback": "El cierre de un incidente mayor es donde se convierte la crisis en aprendizaje organizacional. Sin línea de tiempo documentada y revisión posterior, la organización repite el mismo incidente cada semestre.",
+              "effects": { "satisfaction": 6, "risk": -10, "morale": -2, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Cerrar el incidente ahora: el servicio funciona y el equipo necesita descansar",
+              "quality": "poor",
+              "consequence": "Nadie documenta qué se hizo. En el siguiente pico, el técnico de turno investiga desde cero durante dos horas.",
+              "feedback": "Cerrar sin documentar traslada el costo al próximo turno. La documentación de un incidente mayor no es trámite: es el activo que evita repetir el diagnóstico completo.",
+              "effects": { "risk": 12, "morale": 4, "satisfaction": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Mantener el incidente abierto hasta tener la solución definitiva del proveedor",
+              "quality": "acceptable",
+              "consequence": "El incidente queda abierto tres semanas y contamina las métricas de tiempo de resolución.",
+              "feedback": "Si el servicio está restaurado, el incidente se cierra: lo que continúa abierto es el problema. Mantenerlo abierto distorsiona las métricas y confunde la prioridad del equipo.",
+              "effects": { "sla": -5, "risk": -4 }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sc_inc_02",
+      "moduleId": "incidentes",
+      "title": "Lentitud del ERP a fin de mes",
+      "company": "Grupo Andina Retail",
+      "role": "Analista de servicios TI de turno",
+      "difficulty": "básico",
+      "estimatedMinutes": 7,
+      "initialKpis": { "sla": 66, "satisfaction": 60, "morale": 72, "risk": 42 },
+      "briefing": "Último día hábil del mes. Contabilidad debe cerrar y el ERP responde con lentitud creciente desde las 9:00. No está caído: funciona, pero cada operación tarda hasta cinco veces más de lo normal. Nadie ha declarado nada todavía.",
+      "objectives": [
+        "Priorizar una degradación del servicio, no solo una caída total",
+        "Recolectar evidencia útil antes de escalar",
+        "Manejar la presión del usuario sin romper el proceso"
+      ],
+      "takeaways": [
+        "Una degradación del servicio es un incidente, aunque nada se haya caído.",
+        "Escalar sin evidencia hace perder tiempo: el equipo de segundo nivel repite el diagnóstico.",
+        "El contexto del negocio (cierre contable, campaña, matrícula) cambia la urgencia de un mismo síntoma técnico."
+      ],
+      "steps": [
+        {
+          "id": "m1",
+          "title": "¿Esto es un incidente?",
+          "competencyId": "inc",
+          "frameworkRef": "ITIL 4: un incidente es una interrupción no planificada o una reducción en la calidad de un servicio.",
+          "hint": "Revisa la definición: la palabra clave no es solo interrupción.",
+          "ticket": {
+            "code": "INC-5102",
+            "type": "Incidente",
+            "title": "ERP responde con lentitud severa en módulo contable",
+            "reportedBy": "Jefa de Contabilidad",
+            "service": "ERP - contabilidad",
+            "impact": "Medio: 8 usuarios, proceso de cierre mensual",
+            "urgency": "Alta: cierre contable vence hoy",
+            "detail": "Cada asiento contable tarda 40 segundos en registrarse; lo normal son 8 segundos."
+          },
+          "situation": "Un técnico del equipo comenta que no debería registrarse como incidente porque el sistema funciona.",
+          "question": "¿Cómo lo tratas?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Como incidente: hay reducción de la calidad del servicio con impacto en un proceso crítico",
+              "quality": "optimal",
+              "consequence": "El caso entra con prioridad alta por el vencimiento del cierre contable y activa el diagnóstico inmediato.",
+              "feedback": "La definición de incidente incluye explícitamente la reducción de calidad del servicio. Además, el contexto de negocio (cierre mensual) eleva la urgencia sobre el mismo síntoma técnico en un día cualquiera.",
+              "effects": { "sla": 6, "satisfaction": 5, "risk": -4 }
+            },
+            {
+              "id": "b",
+              "label": "Como solicitud de mejora de rendimiento para el próximo mantenimiento",
+              "quality": "poor",
+              "consequence": "El ticket queda en cola de mejoras. Contabilidad no cierra a tiempo y el reporte se entrega con dos días de retraso.",
+              "feedback": "Reclasificar un incidente como mejora saca el caso del flujo urgente y desprotege un proceso crítico del negocio. La lentitud severa en un día de cierre no es una mejora deseable, es una falla del servicio.",
+              "effects": { "sla": -10, "satisfaction": -12, "risk": 8 }
+            },
+            {
+              "id": "c",
+              "label": "Como incidente de prioridad baja, porque solo son 8 usuarios",
+              "quality": "acceptable",
+              "consequence": "Se atiende recién por la tarde. El cierre se completa tarde, con horas extra del área contable.",
+              "feedback": "Contar usuarios es solo la mitad de la matriz. Ocho personas ejecutando el cierre contable del mes tienen más impacto de negocio que ochenta usuarios en una tarea rutinaria.",
+              "effects": { "sla": -4, "satisfaction": -6 }
+            }
+          ]
+        },
+        {
+          "id": "m2",
+          "title": "Evidencia antes de escalar",
+          "competencyId": "prb",
+          "frameworkRef": "ITIL 4: el diagnóstico inicial de primer nivel debe aportar datos que eviten repetir el análisis en el siguiente nivel.",
+          "hint": "El segundo nivel necesita datos, no una descripción del malestar del usuario.",
+          "situation": "Vas a escalar al equipo de infraestructura. Tienes 10 minutos antes de la reunión de ellos.",
+          "question": "¿Qué envías con el escalamiento?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Hora de inicio, usuarios y módulos afectados, operaciones lentas medidas, y si ocurre también en otros módulos",
+              "quality": "optimal",
+              "consequence": "Infraestructura identifica en 20 minutos un proceso de reportes que bloquea tablas del módulo contable.",
+              "feedback": "Un escalamiento útil incluye alcance, momento de inicio, evidencia medida y descarte de hipótesis simples. Eso puede ahorrar horas de diagnóstico en el siguiente nivel.",
+              "effects": { "sla": 8, "morale": 4, "risk": -5 }
+            },
+            {
+              "id": "b",
+              "label": "El texto del ticket tal como lo escribió la usuaria",
+              "quality": "poor",
+              "consequence": "Infraestructura pide los mismos datos que tú podías haber recogido. Se pierden 45 minutos en idas y vueltas.",
+              "feedback": "Trasladar el ticket sin diagnóstico convierte al primer nivel en un intermediario. El escalamiento debe agregar información, no solo cambiar de responsable.",
+              "effects": { "sla": -6, "morale": -5, "satisfaction": -3 }
+            },
+            {
+              "id": "c",
+              "label": "Tu hipótesis de que el servidor necesita más memoria, para que la validen",
+              "quality": "acceptable",
+              "consequence": "El equipo revisa memoria, la descarta y recién entonces empieza a mirar la base de datos.",
+              "feedback": "Aportar una hipótesis está bien, pero enviarla sin los datos que la sustentan sesga el diagnóstico del otro equipo hacia tu suposición y hace perder tiempo si estabas equivocado.",
+              "effects": { "sla": -3, "morale": 2 }
+            }
+          ]
+        },
+        {
+          "id": "m3",
+          "title": "La presión sube",
+          "competencyId": "comm",
+          "frameworkRef": "ITIL 4: la gestión de incidentes mantiene informado al usuario con actualizaciones periódicas mientras dura la investigación.",
+          "hint": "Piensa qué reduce la ansiedad del usuario sin quitarle tiempo al diagnóstico técnico.",
+          "situation": "La jefa de Contabilidad llama por cuarta vez en una hora. Tu técnico está en pleno diagnóstico y cada llamada lo interrumpe.",
+          "question": "¿Cómo manejas la situación?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Acuerdas con ella una actualización cada 30 minutos y asumes tú ese contacto para liberar al técnico",
+              "quality": "optimal",
+              "consequence": "Las llamadas cesan. El técnico trabaja sin interrupciones y el diagnóstico avanza.",
+              "feedback": "Un ritmo de actualización acordado sustituye la necesidad de llamar. Separar el rol de comunicación del rol técnico es una decisión básica de coordinación en incidentes.",
+              "effects": { "satisfaction": 7, "morale": 6, "sla": 3 }
+            },
+            {
+              "id": "b",
+              "label": "Pasas sus llamadas directamente al técnico, que es quien sabe el estado real",
+              "quality": "poor",
+              "consequence": "El técnico dedica 25 minutos a explicar en vez de resolver. El diagnóstico se retrasa.",
+              "feedback": "Quien resuelve no debería ser quien atiende la presión del usuario. Es una de las razones por las que existe la figura de coordinador de incidentes.",
+              "effects": { "morale": -8, "sla": -5, "satisfaction": 2 }
+            },
+            {
+              "id": "c",
+              "label": "Dejas de contestar hasta tener una respuesta concreta",
+              "quality": "poor",
+              "consequence": "La jefa de Contabilidad escala a la gerencia general y el caso se convierte en un conflicto entre áreas.",
+              "feedback": "El silencio escala solo. En un proceso crítico, no responder garantiza que el reclamo suba de nivel y llegue con más ruido del que traía.",
+              "effects": { "satisfaction": -10, "risk": 6 }
+            }
+          ]
+        },
+        {
+          "id": "m4",
+          "title": "Se repite todos los meses",
+          "competencyId": "prb",
+          "frameworkRef": "ITIL 4: los incidentes recurrentes con patrón identificable deben derivar en un registro de problema.",
+          "hint": "Fíjate en el patrón: mismo síntoma, misma fecha del mes, tercera vez.",
+          "situation": "Al revisar el histórico descubres que ocurrió lo mismo los dos cierres anteriores. Cada vez se resolvió reiniciando el servicio y cerrando el ticket.",
+          "question": "¿Qué haces con ese hallazgo?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Registrar un problema con la evidencia de los tres meses y proponer analizarlo antes del próximo cierre",
+              "quality": "optimal",
+              "consequence": "El análisis encuentra un reporte programado que corre a las 9:00 y bloquea tablas. Se reprograma a las 22:00 y el patrón desaparece.",
+              "feedback": "Tres incidentes con el mismo patrón temporal son un problema, no tres incidentes. Documentar la evidencia acumulada es lo que convierte una molestia repetida en una corrección definitiva.",
+              "effects": { "risk": -12, "sla": 6, "satisfaction": 5 }
+            },
+            {
+              "id": "b",
+              "label": "Anotar el procedimiento de reinicio para que el próximo mes se resuelva más rápido",
+              "quality": "acceptable",
+              "consequence": "El siguiente cierre se resuelve en 20 minutos en vez de 3 horas, pero vuelve a ocurrir.",
+              "feedback": "Documentar la solución temporal tiene valor real y es parte de una base de errores conocidos. Pero sin registro de problema, la organización acepta convivir indefinidamente con una falla evitable.",
+              "effects": { "sla": 4, "risk": 3 }
+            },
+            {
+              "id": "c",
+              "label": "Cerrar el ticket: el servicio ya funciona y el cierre contable se completó",
+              "quality": "poor",
+              "consequence": "El mes siguiente se repite, esta vez durante una auditoría externa.",
+              "feedback": "Cerrar sin registrar el patrón es cómo una organización acumula fallas crónicas. La gestión de problemas existe justamente para romper este ciclo.",
+              "effects": { "risk": 12, "satisfaction": -4 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

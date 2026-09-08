@@ -1,0 +1,167 @@
+{
+  "scenarios": [
+    {
+      "id": "sc_prd_01",
+      "moduleId": "producto",
+      "title": "El portal de trámites que nadie logra terminar",
+      "company": "Municipalidad Provincial de Huamanga",
+      "role": "Responsable de producto del área de TI",
+      "difficulty": "intermedio",
+      "estimatedMinutes": 9,
+      "initialKpis": { "sla": 66, "satisfaction": 55, "budget": 58, "morale": 64, "risk": 52 },
+      "briefing": "La municipalidad quiere un portal donde los vecinos hagan trámites en línea. El pedido original incluye 14 trámites, pagos en línea, firma digital, notificaciones, chatbot y panel de indicadores para la alcaldía. Tienes 2 desarrolladores, 4 meses y un presupuesto que alcanza para menos de la mitad de eso. Tu trabajo es decidir qué se construye primero y cómo se comprobará que sirve.",
+      "objectives": [
+        "Reducir un alcance inflado a una primera versión desarrollable",
+        "Distinguir funcionalidad núcleo de funcionalidad deseable",
+        "Definir una validación basada en uso real y no en métricas de vanidad"
+      ],
+      "takeaways": [
+        "Un MVP no es una versión incompleta: es la versión más pequeña que ya entrega valor y genera aprendizaje.",
+        "Si al quitar una funcionalidad el usuario ya no puede completar el flujo principal, esa funcionalidad no era recortable.",
+        "Descargas y visitas pueden verse bien sin que nadie haya completado un trámite: mide el resultado, no el tráfico."
+      ],
+      "steps": [
+        {
+          "id": "r1",
+          "title": "Recortar el alcance",
+          "competencyId": "prio",
+          "frameworkRef": "MVP: la primera versión debe resolver de punta a punta un problema real, no cubrir parcialmente todos los problemas.",
+          "hint": "Pregúntate qué trámite genera más colas presenciales hoy, y si tu versión permite completarlo sin ir a la municipalidad.",
+          "situation": "Los datos de la plataforma de atención muestran que el 61% de las visitas presenciales son por constancia de no adeudo y pago de arbitrios. Los otros 12 trámites suman el 39% restante y varios requieren firma de tres oficinas.",
+          "question": "¿Cómo defines la primera versión?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Dos trámites completos de punta a punta: constancia de no adeudo y pago de arbitrios",
+              "quality": "optimal",
+              "consequence": "En cuatro meses se entrega un portal que permite completar ambos trámites sin ir a la municipalidad. Las colas presenciales bajan 43% en el primer mes.",
+              "feedback": "Un MVP resuelve completamente un problema pequeño, no parcialmente uno grande. Elegir los dos trámites que concentran el 61% de la demanda maximiza el impacto con el mínimo alcance.",
+              "effects": { "satisfaction": 10, "budget": 4, "risk": -8, "sla": 5 }
+            },
+            {
+              "id": "b",
+              "label": "Los 14 trámites en modo consulta, y el envío de solicitudes en una segunda versión",
+              "quality": "poor",
+              "consequence": "El portal informa sobre 14 trámites pero no permite hacer ninguno. El vecino consulta y luego va igual a hacer cola.",
+              "feedback": "Cubrir todo a medias no elimina el viaje del usuario, que es el problema real. Es la trampa más común al recortar alcance: se recorta la profundidad en vez de la amplitud, y el resultado no sirve para nada.",
+              "effects": { "satisfaction": -10, "budget": -8, "risk": 8 }
+            },
+            {
+              "id": "c",
+              "label": "Los cuatro trámites más solicitados, completos, aunque el presupuesto quede muy justo",
+              "quality": "acceptable",
+              "consequence": "Se entregan tres de los cuatro a tiempo; el cuarto queda a medio construir y sin pruebas.",
+              "feedback": "La dirección es correcta, pero comprometer un alcance que el presupuesto no sostiene termina en entregas incompletas. Es preferible cerrar dos trámites bien y sumar el tercero después.",
+              "effects": { "budget": -8, "satisfaction": 3, "risk": 5 }
+            }
+          ]
+        },
+        {
+          "id": "r2",
+          "title": "La firma digital",
+          "competencyId": "plan",
+          "frameworkRef": "MVP: una funcionalidad es núcleo si sin ella el usuario no puede completar el flujo principal.",
+          "hint": "Verifica si la normativa exige firma digital para estos dos trámites específicos, o si es un supuesto heredado del pedido original.",
+          "situation": "La constancia de no adeudo requiere por norma un documento firmado digitalmente por la oficina de rentas. El pago de arbitrios no lo requiere. Integrar firma digital consume el 35% del presupuesto disponible.",
+          "question": "¿Qué decides?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Incluir firma digital solo en la constancia, porque sin ella el documento no tiene validez legal",
+              "quality": "optimal",
+              "consequence": "Se integra firma digital únicamente en el flujo de constancia. El pago de arbitrios sale con recibo electrónico simple y ahorra presupuesto.",
+              "feedback": "La prueba es exacta: sin firma digital la constancia no sirve, así que es núcleo para ese flujo; el pago funciona sin ella, así que no lo es. Aplicar el criterio por flujo y no por producto completo es lo que permite recortar sin romper nada.",
+              "effects": { "budget": -10, "satisfaction": 8, "risk": -8 }
+            },
+            {
+              "id": "b",
+              "label": "Postergarla a la versión 2 y emitir la constancia sin firma por ahora",
+              "quality": "poor",
+              "consequence": "Las constancias emitidas no son válidas para trámites bancarios. Los vecinos vuelven a la municipalidad a pedir la versión firmada.",
+              "feedback": "Recortar una funcionalidad que sostiene la validez del entregable produce una demo, no un producto. El usuario completa el flujo en pantalla y aun así no obtiene lo que necesitaba.",
+              "effects": { "satisfaction": -14, "risk": 10, "budget": 6 }
+            },
+            {
+              "id": "c",
+              "label": "Incluirla en ambos trámites para no rehacer la integración más adelante",
+              "quality": "acceptable",
+              "consequence": "El presupuesto se consume antes de terminar las notificaciones al vecino, que quedan fuera del lanzamiento.",
+              "feedback": "Anticipar necesidades futuras suena prudente pero aquí gasta presupuesto en algo que hoy nadie necesita, a costa de una funcionalidad del flujo actual.",
+              "effects": { "budget": -12, "satisfaction": -3 }
+            }
+          ]
+        },
+        {
+          "id": "r3",
+          "title": "El panel para la alcaldía",
+          "competencyId": "prio",
+          "frameworkRef": "MVP: las funcionalidades para interesados internos compiten con las del usuario final y deben priorizarse con el mismo criterio.",
+          "hint": "Pregúntate a quién sirve cada funcionalidad y qué pasa con el objetivo del proyecto si se posterga.",
+          "situation": "El gerente municipal insiste en el panel de indicadores en tiempo real para la alcaldía. Consume tres semanas de desarrollo, que son las mismas tres semanas que faltan para dejar el flujo de pago listo y probado.",
+          "question": "¿Qué haces?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Proponer un reporte semanal simple ahora y el panel en tiempo real en la versión 2",
+              "quality": "optimal",
+              "consequence": "El reporte semanal toma dos días y cubre la necesidad real de la alcaldía. El flujo de pago se completa y se prueba a tiempo.",
+              "feedback": "Detrás de una funcionalidad cara suele haber una necesidad barata: la alcaldía quiere saber si el portal funciona, no necesariamente verlo en tiempo real. Encontrar la versión mínima de la necesidad es tan importante como recortar el alcance.",
+              "effects": { "satisfaction": 7, "budget": 6, "sla": 4 }
+            },
+            {
+              "id": "b",
+              "label": "Construir el panel: es quien aprueba el presupuesto del área y no conviene contradecirlo",
+              "quality": "poor",
+              "consequence": "El panel se entrega funcionando y el flujo de pago sale sin pruebas. Falla en la primera semana con 200 pagos en disputa.",
+              "feedback": "Priorizar por jerarquía en lugar de por valor para el usuario es la vía más rápida a un producto que impresiona en la demo y falla en producción.",
+              "effects": { "risk": 14, "satisfaction": -12, "sla": -8 }
+            },
+            {
+              "id": "c",
+              "label": "Rechazarlo indicando que no forma parte del MVP",
+              "quality": "acceptable",
+              "consequence": "El gerente municipal reduce el apoyo político al proyecto y la versión 2 queda sin financiamiento.",
+              "feedback": "Defender el alcance es necesario, pero un no sin alternativa desperdicia el respaldo que el proyecto necesita para continuar. Casi siempre existe una versión reducida que resuelve la necesidad sin comprometer el MVP.",
+              "effects": { "budget": -8, "satisfaction": -4 }
+            }
+          ]
+        },
+        {
+          "id": "r4",
+          "title": "Cómo saber si sirvió",
+          "competencyId": "comm",
+          "frameworkRef": "Validación de producto: mide el resultado del usuario, no la actividad en la plataforma.",
+          "hint": "Piensa qué indicador podría verse muy bien mientras el vecino sigue teniendo que ir a la municipalidad.",
+          "situation": "Falta definir cómo se evaluará el portal a los tres meses del lanzamiento. La oficina de comunicaciones propone medir visitas y descargas.",
+          "question": "¿Qué defines como criterio de éxito?",
+          "options": [
+            {
+              "id": "a",
+              "label": "Trámites completados en línea sin visita presencial, y tiempo promedio del trámite comparado con el proceso anterior",
+              "quality": "optimal",
+              "consequence": "A los tres meses: 2.100 trámites completados en línea y una reducción del tiempo promedio de 3 días a 40 minutos. Con esa evidencia se aprueba la versión 2.",
+              "feedback": "El criterio de éxito debe medir el resultado que justificó el proyecto: que el vecino resuelva sin ir. Ese dato además es el argumento con el que se consigue financiamiento para seguir.",
+              "effects": { "satisfaction": 9, "risk": -8, "budget": 5 }
+            },
+            {
+              "id": "b",
+              "label": "Visitas al portal y descargas de la aplicación, que son fáciles de medir y comunicar",
+              "quality": "poor",
+              "consequence": "Se reportan 18.000 visitas. Nadie nota que solo el 6% completó un trámite y las colas presenciales siguen iguales.",
+              "feedback": "Las métricas de tráfico pueden crecer mientras el problema sigue intacto. Son exactamente el tipo de indicador que se ve bien en un informe y no dice nada sobre el valor entregado.",
+              "effects": { "satisfaction": -8, "risk": 10 }
+            },
+            {
+              "id": "c",
+              "label": "Una encuesta de satisfacción a los usuarios del portal",
+              "quality": "acceptable",
+              "consequence": "La encuesta arroja buena percepción entre quienes respondieron, pero no explica por qué la mayoría abandona el flujo de pago.",
+              "feedback": "La percepción aporta contexto valioso, pero por sí sola no revela dónde falla el flujo ni cuántos lograron resolver su trámite. Sirve como complemento del indicador de resultado, no como sustituto.",
+              "effects": { "satisfaction": 2, "risk": 3 }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
