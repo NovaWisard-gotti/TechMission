@@ -63,7 +63,8 @@
       "summary": "Proteger el compromiso del sprint, negociar alcance y sostener la definición de terminado frente a la presión del negocio.",
       "competencies": ["plan", "prio", "comm"],
       "scenarioFile": "scrum.json",
-      "order": 5
+      "order": 5,
+      "requiresModuleId": "cambios"
     },
     {
       "id": "pmbok",
@@ -73,7 +74,8 @@
       "summary": "Leer indicadores de valor ganado, responder a riesgos y decidir acciones correctivas en un proyecto de infraestructura.",
       "competencies": ["plan", "comm", "prio"],
       "scenarioFile": "pmbok.json",
-      "order": 6
+      "order": 6,
+      "requiresModuleId": "scrum"
     },
     {
       "id": "producto",
@@ -83,7 +85,8 @@
       "summary": "Recortar alcance con criterio, elegir qué se construye primero y definir cómo se validará que sirve.",
       "competencies": ["prio", "plan", "comm"],
       "scenarioFile": "product.json",
-      "order": 7
+      "order": 7,
+      "requiresModuleId": "pmbok"
     }
   ]
 }

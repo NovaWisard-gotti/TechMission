@@ -170,7 +170,10 @@ class _SimulationScreenState extends ConsumerState<SimulationScreen> {
                 Chip(
                   label: Text(
                     CompetencyCatalog.byId(step.competencyId).label,
-                    style: const TextStyle(fontSize: 10),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                   visualDensity: VisualDensity.compact,
                 ),

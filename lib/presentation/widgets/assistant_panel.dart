@@ -111,8 +111,13 @@ class _AssistantPanelState extends ConsumerState<AssistantPanel> {
               itemCount: state.suggestions.length,
               separatorBuilder: (_, __) => const SizedBox(width: 8),
               itemBuilder: (BuildContext context, int index) => ActionChip(
-                label: Text(state.suggestions[index],
-                    style: const TextStyle(fontSize: 11)),
+                label: Text(
+                  state.suggestions[index],
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
+                ),
                 onPressed: () => _send(state.suggestions[index]),
               ),
             ),

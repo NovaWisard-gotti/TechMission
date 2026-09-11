@@ -8,10 +8,16 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 echo "==> Generando plataformas nativas"
-flutter create --project-name it_management_simulator --org pe.edu.emaf --platforms=android,ios .
+flutter create --project-name techmission --org pe.edu.emaf --platforms=android,ios .
+
+echo "==> Nombre de la app en Android"
+sed -i 's/android:label="techmission"/android:label="TechMission"/' android/app/src/main/AndroidManifest.xml
 
 echo "==> Descargando dependencias"
 flutter pub get
+
+echo "==> Generando icono de la app"
+dart run flutter_launcher_icons
 
 echo "==> Analisis estatico"
 flutter analyze

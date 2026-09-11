@@ -69,6 +69,9 @@ jobs:
       - name: Dependencias
         run: flutter pub get
 
+      - name: Icono de la app
+        run: dart run flutter_launcher_icons
+
       - name: Construir APK de release
         run: flutter build apk --release --build-name=1.0.0 --build-number=${{ github.run_number }}
 

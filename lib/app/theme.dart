@@ -59,8 +59,20 @@ class AppTheme {
         ),
       ),
       chipTheme: ChipThemeData(
+        backgroundColor: scheme.surfaceContainerHighest,
+        disabledColor: scheme.surfaceContainerHighest,
+        selectedColor: scheme.secondaryContainer,
         side: BorderSide(color: scheme.outlineVariant),
-        labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        labelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: scheme.onSurfaceVariant,
+        ),
+        secondaryLabelStyle: TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
+          color: scheme.onSecondaryContainer,
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       ),
       inputDecorationTheme: InputDecorationTheme(

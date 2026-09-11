@@ -55,7 +55,14 @@ class ModuleDetailScreen extends ConsumerWidget {
                         children: module.competencies
                             .map((String id) => Chip(
                                   label: Text(
-                                      CompetencyCatalog.byId(id).label),
+                                    CompetencyCatalog.byId(id).label,
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurfaceVariant,
+                                    ),
+                                  ),
                                   visualDensity: VisualDensity.compact,
                                 ))
                             .toList(),
