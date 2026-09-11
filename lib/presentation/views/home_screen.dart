@@ -90,6 +90,7 @@ class _HomeBody extends StatelessWidget {
               module: module,
               scenarioIds: catalog.scenarioIdsOf(module.id),
               progress: progress,
+              locked: catalog.isModuleLocked(module, progress),
             ),
           ),
         ),
@@ -329,36 +330,51 @@ class _ModuleMiniCard extends StatelessWidget {
     required this.module,
     required this.scenarioIds,
     required this.progress,
+    required this.locked,
   });
 
   final LearningModule module;
   final List<String> scenarioIds;
   final LearnerProgress progress;
+  final bool locked;
 
   @override
   Widget build(BuildContext context) {
     final int done =
         scenarioIds.where((String id) => progress.isCompleted(id)).length;
-    return AppCard(
-      child: ListTile(
-        onTap: () => openModule(context, module),
-        leading: CircleAvatar(
-          radius: 18,
-          backgroundColor:
-              Theme.of(context).colorScheme.primary.withOpacity(0.10),
-          child: Text(
-            '${module.order}',
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).colorScheme.primary,
-            ),
+    return Opacity(
+      opacity: locked ? 0.55 : 1,
+      child: AppCard(
+        child: ListTile(
+          onTap: locked
+              ? () => ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          'Resuelve al menos un caso del modulo anterior para desbloquear este.'),
+                    ),
+                  )
+              : () => openModule(context, module),
+          leading: CircleAvatar(
+            radius: 18,
+            backgroundColor:
+                Theme.of(context).colorScheme.primary.withOpacity(0.10),
+            child: locked
+                ? const Icon(Icons.lock_outline, size: 16)
+                : Text(
+                    '${module.order}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
           ),
+          title: Text(module.title,
+              style:
+                  const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+          subtitle: Text('${module.framework} - $done/${scenarioIds.length} casos',
+              style: const TextStyle(fontSize: 12)),
+          trailing: const Icon(Icons.chevron_right),
         ),
-        title: Text(module.title,
-            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
-        subtitle: Text('${module.framework} - $done/${scenarioIds.length} casos',
-            style: const TextStyle(fontSize: 12)),
-        trailing: const Icon(Icons.chevron_right),
       ),
     );
   }

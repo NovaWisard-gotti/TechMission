@@ -1,4 +1,5 @@
 import '../../domain/models/module.dart';
+import '../../domain/models/progress.dart';
 import '../../domain/models/scenario.dart';
 import '../datasources/asset_data_source.dart';
 
@@ -38,6 +39,17 @@ class ContentCatalog {
       if (m.isDiagnostic) return m;
     }
     return null;
+  }
+
+  /// La ruta es guiada pero no rigida: solo se bloquea un modulo mientras su
+  /// prerequisito no tenga al menos un caso resuelto. Fuente unica de verdad
+  /// para que Inicio y Modulos siempre muestren el mismo estado de bloqueo.
+  bool isModuleLocked(LearningModule module, LearnerProgress progress) {
+    final String? requires = module.requiresModuleId;
+    if (requires == null) return false;
+    final List<String> ids = scenarioIdsOf(requires);
+    if (ids.isEmpty) return false;
+    return !ids.any((String id) => progress.isCompleted(id));
   }
 }
 

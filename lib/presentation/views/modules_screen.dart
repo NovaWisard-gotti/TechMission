@@ -32,7 +32,7 @@ class ModulesScreen extends ConsumerWidget {
             final List<String> ids = catalog.scenarioIdsOf(module.id);
             final int done =
                 ids.where((String id) => progress.isCompleted(id)).length;
-            final bool locked = _isLocked(module, catalog, progress);
+            final bool locked = catalog.isModuleLocked(module, progress);
 
             return _ModuleCard(
               module: module,
@@ -44,20 +44,6 @@ class ModulesScreen extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  /// La ruta es guiada pero no rigida: solo se bloquea el modulo siguiente
-  /// mientras el prerequisito no tenga al menos un caso resuelto.
-  bool _isLocked(
-    LearningModule module,
-    ContentCatalog catalog,
-    LearnerProgress progress,
-  ) {
-    final String? requires = module.requiresModuleId;
-    if (requires == null) return false;
-    final List<String> ids = catalog.scenarioIdsOf(requires);
-    if (ids.isEmpty) return false;
-    return !ids.any((String id) => progress.isCompleted(id));
   }
 }
 
